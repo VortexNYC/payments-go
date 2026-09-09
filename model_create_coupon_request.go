@@ -28,6 +28,7 @@ type CreateCouponRequest struct {
 	Description *string `json:"description,omitempty"`
 	DiscountType string `json:"discountType"`
 	Amount *int32 `json:"amount,omitempty"`
+	// ISO 4217 alpha-3; only currencies processable on current rails are accepted
 	Currency *string `json:"currency,omitempty"`
 	Percentage *float32 `json:"percentage,omitempty"`
 	Duration string `json:"duration"`

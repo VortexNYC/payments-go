@@ -737,3 +737,291 @@ func (a *PaymentRequestsAPIService) GetPaymentRequestExecute(r PaymentRequestsAP
 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
+
+type PaymentRequestsAPIListPaymentRequestsRequest struct {
+	ctx context.Context
+	ApiService *PaymentRequestsAPIService
+	environment *string
+	merchantAccountId *string
+	customer *string
+	customerExternalId *string
+	billingAccountId *string
+	invoice *string
+	invoiceId *string
+	paymentIntentId *string
+	paymentId *string
+	createdByRef *string
+	status *string
+	lastAttemptStatus *string
+	limit *string
+	offset *string
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) Environment(environment string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) MerchantAccountId(merchantAccountId string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) Customer(customer string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.customer = &customer
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) CustomerExternalId(customerExternalId string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.customerExternalId = &customerExternalId
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) BillingAccountId(billingAccountId string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.billingAccountId = &billingAccountId
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) Invoice(invoice string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.invoice = &invoice
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) InvoiceId(invoiceId string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.invoiceId = &invoiceId
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) PaymentIntentId(paymentIntentId string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.paymentIntentId = &paymentIntentId
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) PaymentId(paymentId string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.paymentId = &paymentId
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) CreatedByRef(createdByRef string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.createdByRef = &createdByRef
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) Status(status string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.status = &status
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) LastAttemptStatus(lastAttemptStatus string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.lastAttemptStatus = &lastAttemptStatus
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) Limit(limit string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) Offset(offset string) PaymentRequestsAPIListPaymentRequestsRequest {
+	r.offset = &offset
+	return r
+}
+
+func (r PaymentRequestsAPIListPaymentRequestsRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
+	return r.ApiService.ListPaymentRequestsExecute(r)
+}
+
+/*
+ListPaymentRequests List payment requests by customer, account, request status, or latest attempt status
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return PaymentRequestsAPIListPaymentRequestsRequest
+*/
+func (a *PaymentRequestsAPIService) ListPaymentRequests(ctx context.Context) PaymentRequestsAPIListPaymentRequestsRequest {
+	return PaymentRequestsAPIListPaymentRequestsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ApiWriteEnvelope
+func (a *PaymentRequestsAPIService) ListPaymentRequestsExecute(r PaymentRequestsAPIListPaymentRequestsRequest) (*ApiWriteEnvelope, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ApiWriteEnvelope
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentRequestsAPIService.ListPaymentRequests")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/payment-requests"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
+	if r.customer != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "customer", r.customer, "form", "")
+	}
+	if r.customerExternalId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "customerExternalId", r.customerExternalId, "form", "")
+	}
+	if r.billingAccountId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "billingAccountId", r.billingAccountId, "form", "")
+	}
+	if r.invoice != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "invoice", r.invoice, "form", "")
+	}
+	if r.invoiceId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "invoiceId", r.invoiceId, "form", "")
+	}
+	if r.paymentIntentId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "paymentIntentId", r.paymentIntentId, "form", "")
+	}
+	if r.paymentId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "paymentId", r.paymentId, "form", "")
+	}
+	if r.createdByRef != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "createdByRef", r.createdByRef, "form", "")
+	}
+	if r.status != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status", r.status, "form", "")
+	}
+	if r.lastAttemptStatus != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "lastAttemptStatus", r.lastAttemptStatus, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.offset != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", r.offset, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}

@@ -27,6 +27,7 @@ type CreateInstallmentPayableRequest struct {
 	CustomerExternalId string `json:"customerExternalId"`
 	BillingAccountId string `json:"billingAccountId"`
 	MerchantAccountId *string `json:"merchantAccountId,omitempty"`
+	// ISO 4217 alpha-3; only currencies processable on current rails are accepted
 	Currency string `json:"currency"`
 	TaxMode string `json:"taxMode"`
 	Taxable *bool `json:"taxable,omitempty"`

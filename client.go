@@ -85,6 +85,8 @@ type APIClient struct {
 
 	PublicAPI *PublicAPIService
 
+	QuotesAPI *QuotesAPIService
+
 	ReceiptsAPI *ReceiptsAPIService
 
 	SessionAPI *SessionAPIService
@@ -130,6 +132,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.PaymentsReadinessAPI = (*PaymentsReadinessAPIService)(&c.common)
 	c.ProviderWebhookAPI = (*ProviderWebhookAPIService)(&c.common)
 	c.PublicAPI = (*PublicAPIService)(&c.common)
+	c.QuotesAPI = (*QuotesAPIService)(&c.common)
 	c.ReceiptsAPI = (*ReceiptsAPIService)(&c.common)
 	c.SessionAPI = (*SessionAPIService)(&c.common)
 	c.SubscriptionsAPI = (*SubscriptionsAPIService)(&c.common)

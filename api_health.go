@@ -22,25 +22,25 @@ import (
 // HealthAPIService HealthAPI service
 type HealthAPIService service
 
-type HealthAPIGetHealthzExactRequest struct {
+type HealthAPIGetHealthExactRequest struct {
 	ctx context.Context
 	ApiService *HealthAPIService
 }
 
-func (r HealthAPIGetHealthzExactRequest) Execute() (map[string]interface{}, *http.Response, error) {
-	return r.ApiService.GetHealthzExactExecute(r)
+func (r HealthAPIGetHealthExactRequest) Execute() (map[string]interface{}, *http.Response, error) {
+	return r.ApiService.GetHealthExactExecute(r)
 }
 
 /*
-GetHealthzExact GET /healthz
+GetHealthExact GET /health
 
 Generated route-discovery operation. Promoted operations in this spec carry exact request and response schemas; use this route entry for auth, path, idempotency, and error semantics until the route is promoted.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return HealthAPIGetHealthzExactRequest
+ @return HealthAPIGetHealthExactRequest
 */
-func (a *HealthAPIService) GetHealthzExact(ctx context.Context) HealthAPIGetHealthzExactRequest {
-	return HealthAPIGetHealthzExactRequest{
+func (a *HealthAPIService) GetHealthExact(ctx context.Context) HealthAPIGetHealthExactRequest {
+	return HealthAPIGetHealthExactRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -48,7 +48,7 @@ func (a *HealthAPIService) GetHealthzExact(ctx context.Context) HealthAPIGetHeal
 
 // Execute executes the request
 //  @return map[string]interface{}
-func (a *HealthAPIService) GetHealthzExactExecute(r HealthAPIGetHealthzExactRequest) (map[string]interface{}, *http.Response, error) {
+func (a *HealthAPIService) GetHealthExactExecute(r HealthAPIGetHealthExactRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -56,12 +56,12 @@ func (a *HealthAPIService) GetHealthzExactExecute(r HealthAPIGetHealthzExactRequ
 		localVarReturnValue  map[string]interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HealthAPIService.GetHealthzExact")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HealthAPIService.GetHealthExact")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/healthz"
+	localVarPath := localBasePath + "/health"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

@@ -354,6 +354,78 @@ func (a *ReceiptsAPIService) ListInvoiceReceiptsExecute(r ReceiptsAPIListInvoice
 type ReceiptsAPIListPaymentReceiptsRequest struct {
 	ctx context.Context
 	ApiService *ReceiptsAPIService
+	environment *string
+	merchantAccountId *string
+	customer *string
+	customerExternalId *string
+	billingAccountId *string
+	invoice *string
+	invoiceId *string
+	paymentId *string
+	paymentIntentId *string
+	status *string
+	limit *string
+	offset *string
+}
+
+func (r ReceiptsAPIListPaymentReceiptsRequest) Environment(environment string) ReceiptsAPIListPaymentReceiptsRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r ReceiptsAPIListPaymentReceiptsRequest) MerchantAccountId(merchantAccountId string) ReceiptsAPIListPaymentReceiptsRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
+}
+
+func (r ReceiptsAPIListPaymentReceiptsRequest) Customer(customer string) ReceiptsAPIListPaymentReceiptsRequest {
+	r.customer = &customer
+	return r
+}
+
+func (r ReceiptsAPIListPaymentReceiptsRequest) CustomerExternalId(customerExternalId string) ReceiptsAPIListPaymentReceiptsRequest {
+	r.customerExternalId = &customerExternalId
+	return r
+}
+
+func (r ReceiptsAPIListPaymentReceiptsRequest) BillingAccountId(billingAccountId string) ReceiptsAPIListPaymentReceiptsRequest {
+	r.billingAccountId = &billingAccountId
+	return r
+}
+
+func (r ReceiptsAPIListPaymentReceiptsRequest) Invoice(invoice string) ReceiptsAPIListPaymentReceiptsRequest {
+	r.invoice = &invoice
+	return r
+}
+
+func (r ReceiptsAPIListPaymentReceiptsRequest) InvoiceId(invoiceId string) ReceiptsAPIListPaymentReceiptsRequest {
+	r.invoiceId = &invoiceId
+	return r
+}
+
+func (r ReceiptsAPIListPaymentReceiptsRequest) PaymentId(paymentId string) ReceiptsAPIListPaymentReceiptsRequest {
+	r.paymentId = &paymentId
+	return r
+}
+
+func (r ReceiptsAPIListPaymentReceiptsRequest) PaymentIntentId(paymentIntentId string) ReceiptsAPIListPaymentReceiptsRequest {
+	r.paymentIntentId = &paymentIntentId
+	return r
+}
+
+func (r ReceiptsAPIListPaymentReceiptsRequest) Status(status string) ReceiptsAPIListPaymentReceiptsRequest {
+	r.status = &status
+	return r
+}
+
+func (r ReceiptsAPIListPaymentReceiptsRequest) Limit(limit string) ReceiptsAPIListPaymentReceiptsRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ReceiptsAPIListPaymentReceiptsRequest) Offset(offset string) ReceiptsAPIListPaymentReceiptsRequest {
+	r.offset = &offset
+	return r
 }
 
 func (r ReceiptsAPIListPaymentReceiptsRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -393,7 +465,45 @@ func (a *ReceiptsAPIService) ListPaymentReceiptsExecute(r ReceiptsAPIListPayment
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
+	if r.customer != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "customer", r.customer, "form", "")
+	}
+	if r.customerExternalId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "customerExternalId", r.customerExternalId, "form", "")
+	}
+	if r.billingAccountId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "billingAccountId", r.billingAccountId, "form", "")
+	}
+	if r.invoice != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "invoice", r.invoice, "form", "")
+	}
+	if r.invoiceId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "invoiceId", r.invoiceId, "form", "")
+	}
+	if r.paymentId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "paymentId", r.paymentId, "form", "")
+	}
+	if r.paymentIntentId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "paymentIntentId", r.paymentIntentId, "form", "")
+	}
+	if r.status != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status", r.status, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.offset != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", r.offset, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

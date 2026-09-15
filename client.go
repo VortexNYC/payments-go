@@ -65,8 +65,6 @@ type APIClient struct {
 
 	EntitlementsAPI *EntitlementsAPIService
 
-	HealthAPI *HealthAPIService
-
 	HostedAPI *HostedAPIService
 
 	InvoicesAPI *InvoicesAPIService
@@ -81,15 +79,11 @@ type APIClient struct {
 
 	PaymentsReadinessAPI *PaymentsReadinessAPIService
 
-	ProviderWebhookAPI *ProviderWebhookAPIService
-
 	PublicAPI *PublicAPIService
 
 	QuotesAPI *QuotesAPIService
 
 	ReceiptsAPI *ReceiptsAPIService
-
-	SessionAPI *SessionAPIService
 
 	SubscriptionsAPI *SubscriptionsAPIService
 
@@ -122,7 +116,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.CustomersAPI = (*CustomersAPIService)(&c.common)
 	c.DiscountsAPI = (*DiscountsAPIService)(&c.common)
 	c.EntitlementsAPI = (*EntitlementsAPIService)(&c.common)
-	c.HealthAPI = (*HealthAPIService)(&c.common)
 	c.HostedAPI = (*HostedAPIService)(&c.common)
 	c.InvoicesAPI = (*InvoicesAPIService)(&c.common)
 	c.PayablesAPI = (*PayablesAPIService)(&c.common)
@@ -130,11 +123,9 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.PaymentRequestsAPI = (*PaymentRequestsAPIService)(&c.common)
 	c.PaymentsAPI = (*PaymentsAPIService)(&c.common)
 	c.PaymentsReadinessAPI = (*PaymentsReadinessAPIService)(&c.common)
-	c.ProviderWebhookAPI = (*ProviderWebhookAPIService)(&c.common)
 	c.PublicAPI = (*PublicAPIService)(&c.common)
 	c.QuotesAPI = (*QuotesAPIService)(&c.common)
 	c.ReceiptsAPI = (*ReceiptsAPIService)(&c.common)
-	c.SessionAPI = (*SessionAPIService)(&c.common)
 	c.SubscriptionsAPI = (*SubscriptionsAPIService)(&c.common)
 	c.TaxAPI = (*TaxAPIService)(&c.common)
 	c.WebhooksAPI = (*WebhooksAPIService)(&c.common)

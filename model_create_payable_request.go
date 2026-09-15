@@ -36,6 +36,8 @@ type CreatePayableRequest struct {
 	Taxable *bool `json:"taxable,omitempty"`
 	TaxBehavior *string `json:"taxBehavior,omitempty"`
 	TaxClassificationKey *string `json:"taxClassificationKey,omitempty"`
+	CustomerTaxAddress *TaxAddress `json:"customerTaxAddress,omitempty"`
+	ShipFromAddress *TaxAddress `json:"shipFromAddress,omitempty"`
 	Metadata map[string]string `json:"metadata"`
 }
 
@@ -412,6 +414,70 @@ func (o *CreatePayableRequest) SetTaxClassificationKey(v string) {
 	o.TaxClassificationKey = &v
 }
 
+// GetCustomerTaxAddress returns the CustomerTaxAddress field value if set, zero value otherwise.
+func (o *CreatePayableRequest) GetCustomerTaxAddress() TaxAddress {
+	if o == nil || IsNil(o.CustomerTaxAddress) {
+		var ret TaxAddress
+		return ret
+	}
+	return *o.CustomerTaxAddress
+}
+
+// GetCustomerTaxAddressOk returns a tuple with the CustomerTaxAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePayableRequest) GetCustomerTaxAddressOk() (*TaxAddress, bool) {
+	if o == nil || IsNil(o.CustomerTaxAddress) {
+		return nil, false
+	}
+	return o.CustomerTaxAddress, true
+}
+
+// HasCustomerTaxAddress returns a boolean if a field has been set.
+func (o *CreatePayableRequest) HasCustomerTaxAddress() bool {
+	if o != nil && !IsNil(o.CustomerTaxAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomerTaxAddress gets a reference to the given TaxAddress and assigns it to the CustomerTaxAddress field.
+func (o *CreatePayableRequest) SetCustomerTaxAddress(v TaxAddress) {
+	o.CustomerTaxAddress = &v
+}
+
+// GetShipFromAddress returns the ShipFromAddress field value if set, zero value otherwise.
+func (o *CreatePayableRequest) GetShipFromAddress() TaxAddress {
+	if o == nil || IsNil(o.ShipFromAddress) {
+		var ret TaxAddress
+		return ret
+	}
+	return *o.ShipFromAddress
+}
+
+// GetShipFromAddressOk returns a tuple with the ShipFromAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePayableRequest) GetShipFromAddressOk() (*TaxAddress, bool) {
+	if o == nil || IsNil(o.ShipFromAddress) {
+		return nil, false
+	}
+	return o.ShipFromAddress, true
+}
+
+// HasShipFromAddress returns a boolean if a field has been set.
+func (o *CreatePayableRequest) HasShipFromAddress() bool {
+	if o != nil && !IsNil(o.ShipFromAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetShipFromAddress gets a reference to the given TaxAddress and assigns it to the ShipFromAddress field.
+func (o *CreatePayableRequest) SetShipFromAddress(v TaxAddress) {
+	o.ShipFromAddress = &v
+}
+
 // GetMetadata returns the Metadata field value
 func (o *CreatePayableRequest) GetMetadata() map[string]string {
 	if o == nil {
@@ -466,6 +532,12 @@ func (o CreatePayableRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TaxClassificationKey) {
 		toSerialize["taxClassificationKey"] = o.TaxClassificationKey
+	}
+	if !IsNil(o.CustomerTaxAddress) {
+		toSerialize["customerTaxAddress"] = o.CustomerTaxAddress
+	}
+	if !IsNil(o.ShipFromAddress) {
+		toSerialize["shipFromAddress"] = o.ShipFromAddress
 	}
 	toSerialize["metadata"] = o.Metadata
 	return toSerialize, nil

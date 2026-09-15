@@ -26,8 +26,20 @@ type CreditNotesAPIService service
 type CreditNotesAPICreateCreditNoteRequest struct {
 	ctx context.Context
 	ApiService *CreditNotesAPIService
+	environment *string
+	merchantAccountId *string
 	creditNoteCreateRequest *CreditNoteCreateRequest
 	idempotencyKey *string
+}
+
+func (r CreditNotesAPICreateCreditNoteRequest) Environment(environment string) CreditNotesAPICreateCreditNoteRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CreditNotesAPICreateCreditNoteRequest) MerchantAccountId(merchantAccountId string) CreditNotesAPICreateCreditNoteRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CreditNotesAPICreateCreditNoteRequest) CreditNoteCreateRequest(creditNoteCreateRequest CreditNoteCreateRequest) CreditNotesAPICreateCreditNoteRequest {
@@ -78,10 +90,18 @@ func (a *CreditNotesAPIService) CreateCreditNoteExecute(r CreditNotesAPICreateCr
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.creditNoteCreateRequest == nil {
 		return localVarReturnValue, nil, reportError("creditNoteCreateRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -208,6 +228,18 @@ type CreditNotesAPIGetCreditNoteRequest struct {
 	ctx context.Context
 	ApiService *CreditNotesAPIService
 	creditNoteId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r CreditNotesAPIGetCreditNoteRequest) Environment(environment string) CreditNotesAPIGetCreditNoteRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CreditNotesAPIGetCreditNoteRequest) MerchantAccountId(merchantAccountId string) CreditNotesAPIGetCreditNoteRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CreditNotesAPIGetCreditNoteRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -250,7 +282,15 @@ func (a *CreditNotesAPIService) GetCreditNoteExecute(r CreditNotesAPIGetCreditNo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -372,6 +412,18 @@ type CreditNotesAPIGetCreditNoteRefundLineageRequest struct {
 	ctx context.Context
 	ApiService *CreditNotesAPIService
 	creditNoteId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r CreditNotesAPIGetCreditNoteRefundLineageRequest) Environment(environment string) CreditNotesAPIGetCreditNoteRefundLineageRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CreditNotesAPIGetCreditNoteRefundLineageRequest) MerchantAccountId(merchantAccountId string) CreditNotesAPIGetCreditNoteRefundLineageRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CreditNotesAPIGetCreditNoteRefundLineageRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -414,7 +466,15 @@ func (a *CreditNotesAPIService) GetCreditNoteRefundLineageExecute(r CreditNotesA
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -536,8 +596,20 @@ type CreditNotesAPIReconcileCreditNoteRefundRequest struct {
 	ctx context.Context
 	ApiService *CreditNotesAPIService
 	creditNoteId string
+	environment *string
+	merchantAccountId *string
 	creditNoteRefundReconcileRequest *CreditNoteRefundReconcileRequest
 	idempotencyKey *string
+}
+
+func (r CreditNotesAPIReconcileCreditNoteRefundRequest) Environment(environment string) CreditNotesAPIReconcileCreditNoteRefundRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CreditNotesAPIReconcileCreditNoteRefundRequest) MerchantAccountId(merchantAccountId string) CreditNotesAPIReconcileCreditNoteRefundRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CreditNotesAPIReconcileCreditNoteRefundRequest) CreditNoteRefundReconcileRequest(creditNoteRefundReconcileRequest CreditNoteRefundReconcileRequest) CreditNotesAPIReconcileCreditNoteRefundRequest {
@@ -591,10 +663,18 @@ func (a *CreditNotesAPIService) ReconcileCreditNoteRefundExecute(r CreditNotesAP
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.creditNoteRefundReconcileRequest == nil {
 		return localVarReturnValue, nil, reportError("creditNoteRefundReconcileRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -721,8 +801,20 @@ type CreditNotesAPIRefundCreditNoteRequest struct {
 	ctx context.Context
 	ApiService *CreditNotesAPIService
 	creditNoteId string
+	environment *string
+	merchantAccountId *string
 	creditNoteRefundRequest *CreditNoteRefundRequest
 	idempotencyKey *string
+}
+
+func (r CreditNotesAPIRefundCreditNoteRequest) Environment(environment string) CreditNotesAPIRefundCreditNoteRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CreditNotesAPIRefundCreditNoteRequest) MerchantAccountId(merchantAccountId string) CreditNotesAPIRefundCreditNoteRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CreditNotesAPIRefundCreditNoteRequest) CreditNoteRefundRequest(creditNoteRefundRequest CreditNoteRefundRequest) CreditNotesAPIRefundCreditNoteRequest {
@@ -776,10 +868,18 @@ func (a *CreditNotesAPIService) RefundCreditNoteExecute(r CreditNotesAPIRefundCr
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.creditNoteRefundRequest == nil {
 		return localVarReturnValue, nil, reportError("creditNoteRefundRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

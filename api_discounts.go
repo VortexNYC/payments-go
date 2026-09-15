@@ -27,8 +27,20 @@ type DiscountsAPIApplyCouponRequest struct {
 	ctx context.Context
 	ApiService *DiscountsAPIService
 	couponId string
+	environment *string
+	merchantAccountId *string
 	applyCouponRequest *ApplyCouponRequest
 	idempotencyKey *string
+}
+
+func (r DiscountsAPIApplyCouponRequest) Environment(environment string) DiscountsAPIApplyCouponRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r DiscountsAPIApplyCouponRequest) MerchantAccountId(merchantAccountId string) DiscountsAPIApplyCouponRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r DiscountsAPIApplyCouponRequest) ApplyCouponRequest(applyCouponRequest ApplyCouponRequest) DiscountsAPIApplyCouponRequest {
@@ -82,10 +94,18 @@ func (a *DiscountsAPIService) ApplyCouponExecute(r DiscountsAPIApplyCouponReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.applyCouponRequest == nil {
 		return localVarReturnValue, nil, reportError("applyCouponRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -211,8 +231,20 @@ func (a *DiscountsAPIService) ApplyCouponExecute(r DiscountsAPIApplyCouponReques
 type DiscountsAPICreateCouponRequest struct {
 	ctx context.Context
 	ApiService *DiscountsAPIService
+	environment *string
+	merchantAccountId *string
 	createCouponRequest *CreateCouponRequest
 	idempotencyKey *string
+}
+
+func (r DiscountsAPICreateCouponRequest) Environment(environment string) DiscountsAPICreateCouponRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r DiscountsAPICreateCouponRequest) MerchantAccountId(merchantAccountId string) DiscountsAPICreateCouponRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r DiscountsAPICreateCouponRequest) CreateCouponRequest(createCouponRequest CreateCouponRequest) DiscountsAPICreateCouponRequest {
@@ -263,10 +295,18 @@ func (a *DiscountsAPIService) CreateCouponExecute(r DiscountsAPICreateCouponRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.createCouponRequest == nil {
 		return localVarReturnValue, nil, reportError("createCouponRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -393,6 +433,18 @@ type DiscountsAPIGetAppliedCouponRequest struct {
 	ctx context.Context
 	ApiService *DiscountsAPIService
 	appliedCouponId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r DiscountsAPIGetAppliedCouponRequest) Environment(environment string) DiscountsAPIGetAppliedCouponRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r DiscountsAPIGetAppliedCouponRequest) MerchantAccountId(merchantAccountId string) DiscountsAPIGetAppliedCouponRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r DiscountsAPIGetAppliedCouponRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -435,7 +487,15 @@ func (a *DiscountsAPIService) GetAppliedCouponExecute(r DiscountsAPIGetAppliedCo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -557,6 +617,18 @@ type DiscountsAPIGetCouponRequest struct {
 	ctx context.Context
 	ApiService *DiscountsAPIService
 	couponId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r DiscountsAPIGetCouponRequest) Environment(environment string) DiscountsAPIGetCouponRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r DiscountsAPIGetCouponRequest) MerchantAccountId(merchantAccountId string) DiscountsAPIGetCouponRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r DiscountsAPIGetCouponRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -599,7 +671,15 @@ func (a *DiscountsAPIService) GetCouponExecute(r DiscountsAPIGetCouponRequest) (
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -720,6 +800,18 @@ func (a *DiscountsAPIService) GetCouponExecute(r DiscountsAPIGetCouponRequest) (
 type DiscountsAPIListAppliedCouponsRequest struct {
 	ctx context.Context
 	ApiService *DiscountsAPIService
+	environment *string
+	merchantAccountId *string
+}
+
+func (r DiscountsAPIListAppliedCouponsRequest) Environment(environment string) DiscountsAPIListAppliedCouponsRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r DiscountsAPIListAppliedCouponsRequest) MerchantAccountId(merchantAccountId string) DiscountsAPIListAppliedCouponsRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r DiscountsAPIListAppliedCouponsRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -759,7 +851,15 @@ func (a *DiscountsAPIService) ListAppliedCouponsExecute(r DiscountsAPIListApplie
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -880,6 +980,18 @@ func (a *DiscountsAPIService) ListAppliedCouponsExecute(r DiscountsAPIListApplie
 type DiscountsAPIListCouponsRequest struct {
 	ctx context.Context
 	ApiService *DiscountsAPIService
+	environment *string
+	merchantAccountId *string
+}
+
+func (r DiscountsAPIListCouponsRequest) Environment(environment string) DiscountsAPIListCouponsRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r DiscountsAPIListCouponsRequest) MerchantAccountId(merchantAccountId string) DiscountsAPIListCouponsRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r DiscountsAPIListCouponsRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -919,7 +1031,15 @@ func (a *DiscountsAPIService) ListCouponsExecute(r DiscountsAPIListCouponsReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1041,8 +1161,20 @@ type DiscountsAPITerminateAppliedCouponRequest struct {
 	ctx context.Context
 	ApiService *DiscountsAPIService
 	appliedCouponId string
+	environment *string
+	merchantAccountId *string
 	terminateAppliedCouponRequest *TerminateAppliedCouponRequest
 	idempotencyKey *string
+}
+
+func (r DiscountsAPITerminateAppliedCouponRequest) Environment(environment string) DiscountsAPITerminateAppliedCouponRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r DiscountsAPITerminateAppliedCouponRequest) MerchantAccountId(merchantAccountId string) DiscountsAPITerminateAppliedCouponRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r DiscountsAPITerminateAppliedCouponRequest) TerminateAppliedCouponRequest(terminateAppliedCouponRequest TerminateAppliedCouponRequest) DiscountsAPITerminateAppliedCouponRequest {
@@ -1096,10 +1228,18 @@ func (a *DiscountsAPIService) TerminateAppliedCouponExecute(r DiscountsAPITermin
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.terminateAppliedCouponRequest == nil {
 		return localVarReturnValue, nil, reportError("terminateAppliedCouponRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -1226,8 +1366,20 @@ type DiscountsAPITerminateCouponRequest struct {
 	ctx context.Context
 	ApiService *DiscountsAPIService
 	couponId string
+	environment *string
+	merchantAccountId *string
 	terminateCouponRequest *TerminateCouponRequest
 	idempotencyKey *string
+}
+
+func (r DiscountsAPITerminateCouponRequest) Environment(environment string) DiscountsAPITerminateCouponRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r DiscountsAPITerminateCouponRequest) MerchantAccountId(merchantAccountId string) DiscountsAPITerminateCouponRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r DiscountsAPITerminateCouponRequest) TerminateCouponRequest(terminateCouponRequest TerminateCouponRequest) DiscountsAPITerminateCouponRequest {
@@ -1281,10 +1433,18 @@ func (a *DiscountsAPIService) TerminateCouponExecute(r DiscountsAPITerminateCoup
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.terminateCouponRequest == nil {
 		return localVarReturnValue, nil, reportError("terminateCouponRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

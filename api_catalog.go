@@ -25,8 +25,20 @@ type CatalogAPIService service
 type CatalogAPICreatePriceRequest struct {
 	ctx context.Context
 	ApiService *CatalogAPIService
+	environment *string
+	merchantAccountId *string
 	priceCreateRequest *PriceCreateRequest
 	idempotencyKey *string
+}
+
+func (r CatalogAPICreatePriceRequest) Environment(environment string) CatalogAPICreatePriceRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CatalogAPICreatePriceRequest) MerchantAccountId(merchantAccountId string) CatalogAPICreatePriceRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CatalogAPICreatePriceRequest) PriceCreateRequest(priceCreateRequest PriceCreateRequest) CatalogAPICreatePriceRequest {
@@ -77,10 +89,18 @@ func (a *CatalogAPIService) CreatePriceExecute(r CatalogAPICreatePriceRequest) (
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.priceCreateRequest == nil {
 		return localVarReturnValue, nil, reportError("priceCreateRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -206,8 +226,20 @@ func (a *CatalogAPIService) CreatePriceExecute(r CatalogAPICreatePriceRequest) (
 type CatalogAPICreateProductRequest struct {
 	ctx context.Context
 	ApiService *CatalogAPIService
+	environment *string
+	merchantAccountId *string
 	productCreateRequest *ProductCreateRequest
 	idempotencyKey *string
+}
+
+func (r CatalogAPICreateProductRequest) Environment(environment string) CatalogAPICreateProductRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CatalogAPICreateProductRequest) MerchantAccountId(merchantAccountId string) CatalogAPICreateProductRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CatalogAPICreateProductRequest) ProductCreateRequest(productCreateRequest ProductCreateRequest) CatalogAPICreateProductRequest {
@@ -258,10 +290,18 @@ func (a *CatalogAPIService) CreateProductExecute(r CatalogAPICreateProductReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.productCreateRequest == nil {
 		return localVarReturnValue, nil, reportError("productCreateRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

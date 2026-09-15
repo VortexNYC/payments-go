@@ -28,10 +28,22 @@ type EntitlementsAPICheckCustomerAccessRequest struct {
 	ApiService *EntitlementsAPIService
 	customerId string
 	key *string
+	environment *string
+	merchantAccountId *string
 }
 
 func (r EntitlementsAPICheckCustomerAccessRequest) Key(key string) EntitlementsAPICheckCustomerAccessRequest {
 	r.key = &key
+	return r
+}
+
+func (r EntitlementsAPICheckCustomerAccessRequest) Environment(environment string) EntitlementsAPICheckCustomerAccessRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r EntitlementsAPICheckCustomerAccessRequest) MerchantAccountId(merchantAccountId string) EntitlementsAPICheckCustomerAccessRequest {
+	r.merchantAccountId = &merchantAccountId
 	return r
 }
 
@@ -78,8 +90,16 @@ func (a *EntitlementsAPIService) CheckCustomerAccessExecute(r EntitlementsAPIChe
 	if r.key == nil {
 		return localVarReturnValue, nil, reportError("key is required and must be specified")
 	}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
 	parameterAddToHeaderOrQuery(localVarQueryParams, "key", r.key, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -201,6 +221,18 @@ type EntitlementsAPIGetCustomerEntitlementsRequest struct {
 	ctx context.Context
 	ApiService *EntitlementsAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r EntitlementsAPIGetCustomerEntitlementsRequest) Environment(environment string) EntitlementsAPIGetCustomerEntitlementsRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r EntitlementsAPIGetCustomerEntitlementsRequest) MerchantAccountId(merchantAccountId string) EntitlementsAPIGetCustomerEntitlementsRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r EntitlementsAPIGetCustomerEntitlementsRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -243,7 +275,15 @@ func (a *EntitlementsAPIService) GetCustomerEntitlementsExecute(r EntitlementsAP
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -365,6 +405,18 @@ type EntitlementsAPIGetCustomerStateRequest struct {
 	ctx context.Context
 	ApiService *EntitlementsAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r EntitlementsAPIGetCustomerStateRequest) Environment(environment string) EntitlementsAPIGetCustomerStateRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r EntitlementsAPIGetCustomerStateRequest) MerchantAccountId(merchantAccountId string) EntitlementsAPIGetCustomerStateRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r EntitlementsAPIGetCustomerStateRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -407,7 +459,15 @@ func (a *EntitlementsAPIService) GetCustomerStateExecute(r EntitlementsAPIGetCus
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -528,8 +588,20 @@ func (a *EntitlementsAPIService) GetCustomerStateExecute(r EntitlementsAPIGetCus
 type EntitlementsAPIGrantEntitlementRequest struct {
 	ctx context.Context
 	ApiService *EntitlementsAPIService
+	environment *string
+	merchantAccountId *string
 	grantEntitlementRequest *GrantEntitlementRequest
 	idempotencyKey *string
+}
+
+func (r EntitlementsAPIGrantEntitlementRequest) Environment(environment string) EntitlementsAPIGrantEntitlementRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r EntitlementsAPIGrantEntitlementRequest) MerchantAccountId(merchantAccountId string) EntitlementsAPIGrantEntitlementRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r EntitlementsAPIGrantEntitlementRequest) GrantEntitlementRequest(grantEntitlementRequest GrantEntitlementRequest) EntitlementsAPIGrantEntitlementRequest {
@@ -580,10 +652,18 @@ func (a *EntitlementsAPIService) GrantEntitlementExecute(r EntitlementsAPIGrantE
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.grantEntitlementRequest == nil {
 		return localVarReturnValue, nil, reportError("grantEntitlementRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -709,8 +789,20 @@ func (a *EntitlementsAPIService) GrantEntitlementExecute(r EntitlementsAPIGrantE
 type EntitlementsAPIRevokeEntitlementRequest struct {
 	ctx context.Context
 	ApiService *EntitlementsAPIService
+	environment *string
+	merchantAccountId *string
 	revokeEntitlementRequest *RevokeEntitlementRequest
 	idempotencyKey *string
+}
+
+func (r EntitlementsAPIRevokeEntitlementRequest) Environment(environment string) EntitlementsAPIRevokeEntitlementRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r EntitlementsAPIRevokeEntitlementRequest) MerchantAccountId(merchantAccountId string) EntitlementsAPIRevokeEntitlementRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r EntitlementsAPIRevokeEntitlementRequest) RevokeEntitlementRequest(revokeEntitlementRequest RevokeEntitlementRequest) EntitlementsAPIRevokeEntitlementRequest {
@@ -761,10 +853,18 @@ func (a *EntitlementsAPIService) RevokeEntitlementExecute(r EntitlementsAPIRevok
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.revokeEntitlementRequest == nil {
 		return localVarReturnValue, nil, reportError("revokeEntitlementRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

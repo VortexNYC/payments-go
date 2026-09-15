@@ -28,8 +28,20 @@ type PaymentMethodsAPIArchiveCustomerPaymentMethodRequest struct {
 	ApiService *PaymentMethodsAPIService
 	customerId string
 	paymentMethodId string
+	environment *string
+	merchantAccountId *string
 	customerPaymentMethodArchiveRequest *CustomerPaymentMethodArchiveRequest
 	idempotencyKey *string
+}
+
+func (r PaymentMethodsAPIArchiveCustomerPaymentMethodRequest) Environment(environment string) PaymentMethodsAPIArchiveCustomerPaymentMethodRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r PaymentMethodsAPIArchiveCustomerPaymentMethodRequest) MerchantAccountId(merchantAccountId string) PaymentMethodsAPIArchiveCustomerPaymentMethodRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r PaymentMethodsAPIArchiveCustomerPaymentMethodRequest) CustomerPaymentMethodArchiveRequest(customerPaymentMethodArchiveRequest CustomerPaymentMethodArchiveRequest) PaymentMethodsAPIArchiveCustomerPaymentMethodRequest {
@@ -86,10 +98,18 @@ func (a *PaymentMethodsAPIService) ArchiveCustomerPaymentMethodExecute(r Payment
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.customerPaymentMethodArchiveRequest == nil {
 		return localVarReturnValue, nil, reportError("customerPaymentMethodArchiveRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -216,8 +236,20 @@ type PaymentMethodsAPIAttachCustomerPaymentMethodRequest struct {
 	ctx context.Context
 	ApiService *PaymentMethodsAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
 	customerPaymentMethodAttachRequest *CustomerPaymentMethodAttachRequest
 	idempotencyKey *string
+}
+
+func (r PaymentMethodsAPIAttachCustomerPaymentMethodRequest) Environment(environment string) PaymentMethodsAPIAttachCustomerPaymentMethodRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r PaymentMethodsAPIAttachCustomerPaymentMethodRequest) MerchantAccountId(merchantAccountId string) PaymentMethodsAPIAttachCustomerPaymentMethodRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r PaymentMethodsAPIAttachCustomerPaymentMethodRequest) CustomerPaymentMethodAttachRequest(customerPaymentMethodAttachRequest CustomerPaymentMethodAttachRequest) PaymentMethodsAPIAttachCustomerPaymentMethodRequest {
@@ -271,10 +303,18 @@ func (a *PaymentMethodsAPIService) AttachCustomerPaymentMethodExecute(r PaymentM
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.customerPaymentMethodAttachRequest == nil {
 		return localVarReturnValue, nil, reportError("customerPaymentMethodAttachRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -401,8 +441,20 @@ type PaymentMethodsAPICreateCustomerPaymentMethodSetupRequest struct {
 	ctx context.Context
 	ApiService *PaymentMethodsAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
 	customerPaymentMethodSetupRequest *CustomerPaymentMethodSetupRequest
 	idempotencyKey *string
+}
+
+func (r PaymentMethodsAPICreateCustomerPaymentMethodSetupRequest) Environment(environment string) PaymentMethodsAPICreateCustomerPaymentMethodSetupRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r PaymentMethodsAPICreateCustomerPaymentMethodSetupRequest) MerchantAccountId(merchantAccountId string) PaymentMethodsAPICreateCustomerPaymentMethodSetupRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r PaymentMethodsAPICreateCustomerPaymentMethodSetupRequest) CustomerPaymentMethodSetupRequest(customerPaymentMethodSetupRequest CustomerPaymentMethodSetupRequest) PaymentMethodsAPICreateCustomerPaymentMethodSetupRequest {
@@ -456,10 +508,18 @@ func (a *PaymentMethodsAPIService) CreateCustomerPaymentMethodSetupExecute(r Pay
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.customerPaymentMethodSetupRequest == nil {
 		return localVarReturnValue, nil, reportError("customerPaymentMethodSetupRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -586,6 +646,18 @@ type PaymentMethodsAPIGetCustomerPaymentStateRequest struct {
 	ctx context.Context
 	ApiService *PaymentMethodsAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r PaymentMethodsAPIGetCustomerPaymentStateRequest) Environment(environment string) PaymentMethodsAPIGetCustomerPaymentStateRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r PaymentMethodsAPIGetCustomerPaymentStateRequest) MerchantAccountId(merchantAccountId string) PaymentMethodsAPIGetCustomerPaymentStateRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r PaymentMethodsAPIGetCustomerPaymentStateRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -628,7 +700,15 @@ func (a *PaymentMethodsAPIService) GetCustomerPaymentStateExecute(r PaymentMetho
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -750,6 +830,18 @@ type PaymentMethodsAPIListCustomerPaymentMethodsRequest struct {
 	ctx context.Context
 	ApiService *PaymentMethodsAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r PaymentMethodsAPIListCustomerPaymentMethodsRequest) Environment(environment string) PaymentMethodsAPIListCustomerPaymentMethodsRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r PaymentMethodsAPIListCustomerPaymentMethodsRequest) MerchantAccountId(merchantAccountId string) PaymentMethodsAPIListCustomerPaymentMethodsRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r PaymentMethodsAPIListCustomerPaymentMethodsRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -792,7 +884,15 @@ func (a *PaymentMethodsAPIService) ListCustomerPaymentMethodsExecute(r PaymentMe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -914,8 +1014,20 @@ type PaymentMethodsAPISetCustomerDefaultPaymentMethodRequest struct {
 	ctx context.Context
 	ApiService *PaymentMethodsAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
 	customerDefaultPaymentMethodRequest *CustomerDefaultPaymentMethodRequest
 	idempotencyKey *string
+}
+
+func (r PaymentMethodsAPISetCustomerDefaultPaymentMethodRequest) Environment(environment string) PaymentMethodsAPISetCustomerDefaultPaymentMethodRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r PaymentMethodsAPISetCustomerDefaultPaymentMethodRequest) MerchantAccountId(merchantAccountId string) PaymentMethodsAPISetCustomerDefaultPaymentMethodRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r PaymentMethodsAPISetCustomerDefaultPaymentMethodRequest) CustomerDefaultPaymentMethodRequest(customerDefaultPaymentMethodRequest CustomerDefaultPaymentMethodRequest) PaymentMethodsAPISetCustomerDefaultPaymentMethodRequest {
@@ -969,10 +1081,18 @@ func (a *PaymentMethodsAPIService) SetCustomerDefaultPaymentMethodExecute(r Paym
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.customerDefaultPaymentMethodRequest == nil {
 		return localVarReturnValue, nil, reportError("customerDefaultPaymentMethodRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

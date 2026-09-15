@@ -27,8 +27,20 @@ type QuotesAPIApproveBillingQuoteVersionRequest struct {
 	ctx context.Context
 	ApiService *QuotesAPIService
 	quoteVersionId string
+	environment *string
+	merchantAccountId *string
 	billingQuoteVersionApproveRequest *BillingQuoteVersionApproveRequest
 	idempotencyKey *string
+}
+
+func (r QuotesAPIApproveBillingQuoteVersionRequest) Environment(environment string) QuotesAPIApproveBillingQuoteVersionRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r QuotesAPIApproveBillingQuoteVersionRequest) MerchantAccountId(merchantAccountId string) QuotesAPIApproveBillingQuoteVersionRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r QuotesAPIApproveBillingQuoteVersionRequest) BillingQuoteVersionApproveRequest(billingQuoteVersionApproveRequest BillingQuoteVersionApproveRequest) QuotesAPIApproveBillingQuoteVersionRequest {
@@ -82,10 +94,18 @@ func (a *QuotesAPIService) ApproveBillingQuoteVersionExecute(r QuotesAPIApproveB
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.billingQuoteVersionApproveRequest == nil {
 		return localVarReturnValue, nil, reportError("billingQuoteVersionApproveRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -211,8 +231,20 @@ func (a *QuotesAPIService) ApproveBillingQuoteVersionExecute(r QuotesAPIApproveB
 type QuotesAPICreateBillingQuoteRequest struct {
 	ctx context.Context
 	ApiService *QuotesAPIService
+	environment *string
+	merchantAccountId *string
 	billingQuoteCreateRequest *BillingQuoteCreateRequest
 	idempotencyKey *string
+}
+
+func (r QuotesAPICreateBillingQuoteRequest) Environment(environment string) QuotesAPICreateBillingQuoteRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r QuotesAPICreateBillingQuoteRequest) MerchantAccountId(merchantAccountId string) QuotesAPICreateBillingQuoteRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r QuotesAPICreateBillingQuoteRequest) BillingQuoteCreateRequest(billingQuoteCreateRequest BillingQuoteCreateRequest) QuotesAPICreateBillingQuoteRequest {
@@ -263,10 +295,18 @@ func (a *QuotesAPIService) CreateBillingQuoteExecute(r QuotesAPICreateBillingQuo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.billingQuoteCreateRequest == nil {
 		return localVarReturnValue, nil, reportError("billingQuoteCreateRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -393,8 +433,20 @@ type QuotesAPICreateBillingQuoteVersionRequest struct {
 	ctx context.Context
 	ApiService *QuotesAPIService
 	quoteId string
+	environment *string
+	merchantAccountId *string
 	billingQuoteVersionCreateRequest *BillingQuoteVersionCreateRequest
 	idempotencyKey *string
+}
+
+func (r QuotesAPICreateBillingQuoteVersionRequest) Environment(environment string) QuotesAPICreateBillingQuoteVersionRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r QuotesAPICreateBillingQuoteVersionRequest) MerchantAccountId(merchantAccountId string) QuotesAPICreateBillingQuoteVersionRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r QuotesAPICreateBillingQuoteVersionRequest) BillingQuoteVersionCreateRequest(billingQuoteVersionCreateRequest BillingQuoteVersionCreateRequest) QuotesAPICreateBillingQuoteVersionRequest {
@@ -448,10 +500,18 @@ func (a *QuotesAPIService) CreateBillingQuoteVersionExecute(r QuotesAPICreateBil
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.billingQuoteVersionCreateRequest == nil {
 		return localVarReturnValue, nil, reportError("billingQuoteVersionCreateRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -578,8 +638,20 @@ type QuotesAPIExecuteBillingOrderRequest struct {
 	ctx context.Context
 	ApiService *QuotesAPIService
 	orderId string
+	environment *string
+	merchantAccountId *string
 	body *map[string]interface{}
 	idempotencyKey *string
+}
+
+func (r QuotesAPIExecuteBillingOrderRequest) Environment(environment string) QuotesAPIExecuteBillingOrderRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r QuotesAPIExecuteBillingOrderRequest) MerchantAccountId(merchantAccountId string) QuotesAPIExecuteBillingOrderRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r QuotesAPIExecuteBillingOrderRequest) Body(body map[string]interface{}) QuotesAPIExecuteBillingOrderRequest {
@@ -633,10 +705,18 @@ func (a *QuotesAPIService) ExecuteBillingOrderExecute(r QuotesAPIExecuteBillingO
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.body == nil {
 		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -762,8 +842,20 @@ func (a *QuotesAPIService) ExecuteBillingOrderExecute(r QuotesAPIExecuteBillingO
 type QuotesAPIExecuteDueBillingOrdersRequest struct {
 	ctx context.Context
 	ApiService *QuotesAPIService
+	environment *string
+	merchantAccountId *string
 	billingOrdersExecuteDueRequest *BillingOrdersExecuteDueRequest
 	idempotencyKey *string
+}
+
+func (r QuotesAPIExecuteDueBillingOrdersRequest) Environment(environment string) QuotesAPIExecuteDueBillingOrdersRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r QuotesAPIExecuteDueBillingOrdersRequest) MerchantAccountId(merchantAccountId string) QuotesAPIExecuteDueBillingOrdersRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r QuotesAPIExecuteDueBillingOrdersRequest) BillingOrdersExecuteDueRequest(billingOrdersExecuteDueRequest BillingOrdersExecuteDueRequest) QuotesAPIExecuteDueBillingOrdersRequest {
@@ -814,10 +906,18 @@ func (a *QuotesAPIService) ExecuteDueBillingOrdersExecute(r QuotesAPIExecuteDueB
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.billingOrdersExecuteDueRequest == nil {
 		return localVarReturnValue, nil, reportError("billingOrdersExecuteDueRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -943,8 +1043,20 @@ func (a *QuotesAPIService) ExecuteDueBillingOrdersExecute(r QuotesAPIExecuteDueB
 type QuotesAPIExpireDueBillingOrderFormsRequest struct {
 	ctx context.Context
 	ApiService *QuotesAPIService
+	environment *string
+	merchantAccountId *string
 	billingOrderFormsExpireDueRequest *BillingOrderFormsExpireDueRequest
 	idempotencyKey *string
+}
+
+func (r QuotesAPIExpireDueBillingOrderFormsRequest) Environment(environment string) QuotesAPIExpireDueBillingOrderFormsRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r QuotesAPIExpireDueBillingOrderFormsRequest) MerchantAccountId(merchantAccountId string) QuotesAPIExpireDueBillingOrderFormsRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r QuotesAPIExpireDueBillingOrderFormsRequest) BillingOrderFormsExpireDueRequest(billingOrderFormsExpireDueRequest BillingOrderFormsExpireDueRequest) QuotesAPIExpireDueBillingOrderFormsRequest {
@@ -995,10 +1107,18 @@ func (a *QuotesAPIService) ExpireDueBillingOrderFormsExecute(r QuotesAPIExpireDu
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.billingOrderFormsExpireDueRequest == nil {
 		return localVarReturnValue, nil, reportError("billingOrderFormsExpireDueRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -2699,8 +2819,20 @@ type QuotesAPIMarkBillingOrderFormSignedRequest struct {
 	ctx context.Context
 	ApiService *QuotesAPIService
 	orderFormId string
+	environment *string
+	merchantAccountId *string
 	billingOrderFormSignRequest *BillingOrderFormSignRequest
 	idempotencyKey *string
+}
+
+func (r QuotesAPIMarkBillingOrderFormSignedRequest) Environment(environment string) QuotesAPIMarkBillingOrderFormSignedRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r QuotesAPIMarkBillingOrderFormSignedRequest) MerchantAccountId(merchantAccountId string) QuotesAPIMarkBillingOrderFormSignedRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r QuotesAPIMarkBillingOrderFormSignedRequest) BillingOrderFormSignRequest(billingOrderFormSignRequest BillingOrderFormSignRequest) QuotesAPIMarkBillingOrderFormSignedRequest {
@@ -2754,10 +2886,18 @@ func (a *QuotesAPIService) MarkBillingOrderFormSignedExecute(r QuotesAPIMarkBill
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.billingOrderFormSignRequest == nil {
 		return localVarReturnValue, nil, reportError("billingOrderFormSignRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -2884,8 +3024,20 @@ type QuotesAPIRegisterBillingOrderFormSignatureRequestRequest struct {
 	ctx context.Context
 	ApiService *QuotesAPIService
 	orderFormId string
+	environment *string
+	merchantAccountId *string
 	billingOrderFormSignatureRequestRequest *BillingOrderFormSignatureRequestRequest
 	idempotencyKey *string
+}
+
+func (r QuotesAPIRegisterBillingOrderFormSignatureRequestRequest) Environment(environment string) QuotesAPIRegisterBillingOrderFormSignatureRequestRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r QuotesAPIRegisterBillingOrderFormSignatureRequestRequest) MerchantAccountId(merchantAccountId string) QuotesAPIRegisterBillingOrderFormSignatureRequestRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r QuotesAPIRegisterBillingOrderFormSignatureRequestRequest) BillingOrderFormSignatureRequestRequest(billingOrderFormSignatureRequestRequest BillingOrderFormSignatureRequestRequest) QuotesAPIRegisterBillingOrderFormSignatureRequestRequest {
@@ -2939,10 +3091,18 @@ func (a *QuotesAPIService) RegisterBillingOrderFormSignatureRequestExecute(r Quo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.billingOrderFormSignatureRequestRequest == nil {
 		return localVarReturnValue, nil, reportError("billingOrderFormSignatureRequestRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -3069,8 +3229,20 @@ type QuotesAPIUpdateBillingOrderRequest struct {
 	ctx context.Context
 	ApiService *QuotesAPIService
 	orderId string
+	environment *string
+	merchantAccountId *string
 	billingOrderUpdateRequest *BillingOrderUpdateRequest
 	idempotencyKey *string
+}
+
+func (r QuotesAPIUpdateBillingOrderRequest) Environment(environment string) QuotesAPIUpdateBillingOrderRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r QuotesAPIUpdateBillingOrderRequest) MerchantAccountId(merchantAccountId string) QuotesAPIUpdateBillingOrderRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r QuotesAPIUpdateBillingOrderRequest) BillingOrderUpdateRequest(billingOrderUpdateRequest BillingOrderUpdateRequest) QuotesAPIUpdateBillingOrderRequest {
@@ -3124,10 +3296,18 @@ func (a *QuotesAPIService) UpdateBillingOrderExecute(r QuotesAPIUpdateBillingOrd
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.billingOrderUpdateRequest == nil {
 		return localVarReturnValue, nil, reportError("billingOrderUpdateRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -3254,8 +3434,20 @@ type QuotesAPIUpdateBillingQuoteVersionRequest struct {
 	ctx context.Context
 	ApiService *QuotesAPIService
 	quoteVersionId string
+	environment *string
+	merchantAccountId *string
 	billingQuoteVersionUpdateRequest *BillingQuoteVersionUpdateRequest
 	idempotencyKey *string
+}
+
+func (r QuotesAPIUpdateBillingQuoteVersionRequest) Environment(environment string) QuotesAPIUpdateBillingQuoteVersionRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r QuotesAPIUpdateBillingQuoteVersionRequest) MerchantAccountId(merchantAccountId string) QuotesAPIUpdateBillingQuoteVersionRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r QuotesAPIUpdateBillingQuoteVersionRequest) BillingQuoteVersionUpdateRequest(billingQuoteVersionUpdateRequest BillingQuoteVersionUpdateRequest) QuotesAPIUpdateBillingQuoteVersionRequest {
@@ -3309,10 +3501,18 @@ func (a *QuotesAPIService) UpdateBillingQuoteVersionExecute(r QuotesAPIUpdateBil
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.billingQuoteVersionUpdateRequest == nil {
 		return localVarReturnValue, nil, reportError("billingQuoteVersionUpdateRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -3439,8 +3639,20 @@ type QuotesAPIVoidBillingOrderFormRequest struct {
 	ctx context.Context
 	ApiService *QuotesAPIService
 	orderFormId string
+	environment *string
+	merchantAccountId *string
 	billingOrderFormVoidRequest *BillingOrderFormVoidRequest
 	idempotencyKey *string
+}
+
+func (r QuotesAPIVoidBillingOrderFormRequest) Environment(environment string) QuotesAPIVoidBillingOrderFormRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r QuotesAPIVoidBillingOrderFormRequest) MerchantAccountId(merchantAccountId string) QuotesAPIVoidBillingOrderFormRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r QuotesAPIVoidBillingOrderFormRequest) BillingOrderFormVoidRequest(billingOrderFormVoidRequest BillingOrderFormVoidRequest) QuotesAPIVoidBillingOrderFormRequest {
@@ -3494,10 +3706,18 @@ func (a *QuotesAPIService) VoidBillingOrderFormExecute(r QuotesAPIVoidBillingOrd
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.billingOrderFormVoidRequest == nil {
 		return localVarReturnValue, nil, reportError("billingOrderFormVoidRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -3624,8 +3844,20 @@ type QuotesAPIVoidBillingQuoteVersionRequest struct {
 	ctx context.Context
 	ApiService *QuotesAPIService
 	quoteVersionId string
+	environment *string
+	merchantAccountId *string
 	billingQuoteVersionVoidRequest *BillingQuoteVersionVoidRequest
 	idempotencyKey *string
+}
+
+func (r QuotesAPIVoidBillingQuoteVersionRequest) Environment(environment string) QuotesAPIVoidBillingQuoteVersionRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r QuotesAPIVoidBillingQuoteVersionRequest) MerchantAccountId(merchantAccountId string) QuotesAPIVoidBillingQuoteVersionRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r QuotesAPIVoidBillingQuoteVersionRequest) BillingQuoteVersionVoidRequest(billingQuoteVersionVoidRequest BillingQuoteVersionVoidRequest) QuotesAPIVoidBillingQuoteVersionRequest {
@@ -3679,10 +3911,18 @@ func (a *QuotesAPIService) VoidBillingQuoteVersionExecute(r QuotesAPIVoidBilling
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.billingQuoteVersionVoidRequest == nil {
 		return localVarReturnValue, nil, reportError("billingQuoteVersionVoidRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

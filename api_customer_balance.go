@@ -27,8 +27,20 @@ type CustomerBalanceAPIExpireCustomerBalanceRequest struct {
 	ctx context.Context
 	ApiService *CustomerBalanceAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
 	expireCustomerBalanceRequest *ExpireCustomerBalanceRequest
 	idempotencyKey *string
+}
+
+func (r CustomerBalanceAPIExpireCustomerBalanceRequest) Environment(environment string) CustomerBalanceAPIExpireCustomerBalanceRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CustomerBalanceAPIExpireCustomerBalanceRequest) MerchantAccountId(merchantAccountId string) CustomerBalanceAPIExpireCustomerBalanceRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CustomerBalanceAPIExpireCustomerBalanceRequest) ExpireCustomerBalanceRequest(expireCustomerBalanceRequest ExpireCustomerBalanceRequest) CustomerBalanceAPIExpireCustomerBalanceRequest {
@@ -82,10 +94,18 @@ func (a *CustomerBalanceAPIService) ExpireCustomerBalanceExecute(r CustomerBalan
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.expireCustomerBalanceRequest == nil {
 		return localVarReturnValue, nil, reportError("expireCustomerBalanceRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -212,6 +232,18 @@ type CustomerBalanceAPIGetCustomerBalanceRequest struct {
 	ctx context.Context
 	ApiService *CustomerBalanceAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r CustomerBalanceAPIGetCustomerBalanceRequest) Environment(environment string) CustomerBalanceAPIGetCustomerBalanceRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CustomerBalanceAPIGetCustomerBalanceRequest) MerchantAccountId(merchantAccountId string) CustomerBalanceAPIGetCustomerBalanceRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CustomerBalanceAPIGetCustomerBalanceRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -254,7 +286,15 @@ func (a *CustomerBalanceAPIService) GetCustomerBalanceExecute(r CustomerBalanceA
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -376,8 +416,20 @@ type CustomerBalanceAPIGrantCustomerBalanceRequest struct {
 	ctx context.Context
 	ApiService *CustomerBalanceAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
 	grantCustomerBalanceRequest *GrantCustomerBalanceRequest
 	idempotencyKey *string
+}
+
+func (r CustomerBalanceAPIGrantCustomerBalanceRequest) Environment(environment string) CustomerBalanceAPIGrantCustomerBalanceRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CustomerBalanceAPIGrantCustomerBalanceRequest) MerchantAccountId(merchantAccountId string) CustomerBalanceAPIGrantCustomerBalanceRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CustomerBalanceAPIGrantCustomerBalanceRequest) GrantCustomerBalanceRequest(grantCustomerBalanceRequest GrantCustomerBalanceRequest) CustomerBalanceAPIGrantCustomerBalanceRequest {
@@ -431,10 +483,18 @@ func (a *CustomerBalanceAPIService) GrantCustomerBalanceExecute(r CustomerBalanc
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.grantCustomerBalanceRequest == nil {
 		return localVarReturnValue, nil, reportError("grantCustomerBalanceRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -561,8 +621,20 @@ type CustomerBalanceAPIGrantCustomerBalanceFromPaymentRequest struct {
 	ctx context.Context
 	ApiService *CustomerBalanceAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
 	grantCustomerBalanceFromPaymentRequest *GrantCustomerBalanceFromPaymentRequest
 	idempotencyKey *string
+}
+
+func (r CustomerBalanceAPIGrantCustomerBalanceFromPaymentRequest) Environment(environment string) CustomerBalanceAPIGrantCustomerBalanceFromPaymentRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CustomerBalanceAPIGrantCustomerBalanceFromPaymentRequest) MerchantAccountId(merchantAccountId string) CustomerBalanceAPIGrantCustomerBalanceFromPaymentRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CustomerBalanceAPIGrantCustomerBalanceFromPaymentRequest) GrantCustomerBalanceFromPaymentRequest(grantCustomerBalanceFromPaymentRequest GrantCustomerBalanceFromPaymentRequest) CustomerBalanceAPIGrantCustomerBalanceFromPaymentRequest {
@@ -616,10 +688,18 @@ func (a *CustomerBalanceAPIService) GrantCustomerBalanceFromPaymentExecute(r Cus
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.grantCustomerBalanceFromPaymentRequest == nil {
 		return localVarReturnValue, nil, reportError("grantCustomerBalanceFromPaymentRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -746,8 +826,20 @@ type CustomerBalanceAPIReverseCustomerBalanceRequest struct {
 	ctx context.Context
 	ApiService *CustomerBalanceAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
 	reverseCustomerBalanceRequest *ReverseCustomerBalanceRequest
 	idempotencyKey *string
+}
+
+func (r CustomerBalanceAPIReverseCustomerBalanceRequest) Environment(environment string) CustomerBalanceAPIReverseCustomerBalanceRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CustomerBalanceAPIReverseCustomerBalanceRequest) MerchantAccountId(merchantAccountId string) CustomerBalanceAPIReverseCustomerBalanceRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CustomerBalanceAPIReverseCustomerBalanceRequest) ReverseCustomerBalanceRequest(reverseCustomerBalanceRequest ReverseCustomerBalanceRequest) CustomerBalanceAPIReverseCustomerBalanceRequest {
@@ -801,10 +893,18 @@ func (a *CustomerBalanceAPIService) ReverseCustomerBalanceExecute(r CustomerBala
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.reverseCustomerBalanceRequest == nil {
 		return localVarReturnValue, nil, reportError("reverseCustomerBalanceRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

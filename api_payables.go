@@ -25,8 +25,20 @@ type PayablesAPIService service
 type PayablesAPICreateDepositBalancePayableRequest struct {
 	ctx context.Context
 	ApiService *PayablesAPIService
+	environment *string
+	merchantAccountId *string
 	createDepositBalancePayableRequest *CreateDepositBalancePayableRequest
 	idempotencyKey *string
+}
+
+func (r PayablesAPICreateDepositBalancePayableRequest) Environment(environment string) PayablesAPICreateDepositBalancePayableRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r PayablesAPICreateDepositBalancePayableRequest) MerchantAccountId(merchantAccountId string) PayablesAPICreateDepositBalancePayableRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r PayablesAPICreateDepositBalancePayableRequest) CreateDepositBalancePayableRequest(createDepositBalancePayableRequest CreateDepositBalancePayableRequest) PayablesAPICreateDepositBalancePayableRequest {
@@ -77,10 +89,18 @@ func (a *PayablesAPIService) CreateDepositBalancePayableExecute(r PayablesAPICre
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.createDepositBalancePayableRequest == nil {
 		return localVarReturnValue, nil, reportError("createDepositBalancePayableRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -206,8 +226,20 @@ func (a *PayablesAPIService) CreateDepositBalancePayableExecute(r PayablesAPICre
 type PayablesAPICreateInstallmentPayableRequest struct {
 	ctx context.Context
 	ApiService *PayablesAPIService
+	environment *string
+	merchantAccountId *string
 	createInstallmentPayableRequest *CreateInstallmentPayableRequest
 	idempotencyKey *string
+}
+
+func (r PayablesAPICreateInstallmentPayableRequest) Environment(environment string) PayablesAPICreateInstallmentPayableRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r PayablesAPICreateInstallmentPayableRequest) MerchantAccountId(merchantAccountId string) PayablesAPICreateInstallmentPayableRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r PayablesAPICreateInstallmentPayableRequest) CreateInstallmentPayableRequest(createInstallmentPayableRequest CreateInstallmentPayableRequest) PayablesAPICreateInstallmentPayableRequest {
@@ -258,10 +290,18 @@ func (a *PayablesAPIService) CreateInstallmentPayableExecute(r PayablesAPICreate
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.createInstallmentPayableRequest == nil {
 		return localVarReturnValue, nil, reportError("createInstallmentPayableRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -387,8 +427,20 @@ func (a *PayablesAPIService) CreateInstallmentPayableExecute(r PayablesAPICreate
 type PayablesAPICreatePayableRequest struct {
 	ctx context.Context
 	ApiService *PayablesAPIService
+	environment *string
+	merchantAccountId *string
 	createPayableRequest *CreatePayableRequest
 	idempotencyKey *string
+}
+
+func (r PayablesAPICreatePayableRequest) Environment(environment string) PayablesAPICreatePayableRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r PayablesAPICreatePayableRequest) MerchantAccountId(merchantAccountId string) PayablesAPICreatePayableRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r PayablesAPICreatePayableRequest) CreatePayableRequest(createPayableRequest CreatePayableRequest) PayablesAPICreatePayableRequest {
@@ -439,10 +491,18 @@ func (a *PayablesAPIService) CreatePayableExecute(r PayablesAPICreatePayableRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.createPayableRequest == nil {
 		return localVarReturnValue, nil, reportError("createPayableRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -568,8 +628,20 @@ func (a *PayablesAPIService) CreatePayableExecute(r PayablesAPICreatePayableRequ
 type PayablesAPICreateRecurringPayableRequest struct {
 	ctx context.Context
 	ApiService *PayablesAPIService
+	environment *string
+	merchantAccountId *string
 	createRecurringPayableRequest *CreateRecurringPayableRequest
 	idempotencyKey *string
+}
+
+func (r PayablesAPICreateRecurringPayableRequest) Environment(environment string) PayablesAPICreateRecurringPayableRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r PayablesAPICreateRecurringPayableRequest) MerchantAccountId(merchantAccountId string) PayablesAPICreateRecurringPayableRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r PayablesAPICreateRecurringPayableRequest) CreateRecurringPayableRequest(createRecurringPayableRequest CreateRecurringPayableRequest) PayablesAPICreateRecurringPayableRequest {
@@ -620,10 +692,18 @@ func (a *PayablesAPIService) CreateRecurringPayableExecute(r PayablesAPICreateRe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.createRecurringPayableRequest == nil {
 		return localVarReturnValue, nil, reportError("createRecurringPayableRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

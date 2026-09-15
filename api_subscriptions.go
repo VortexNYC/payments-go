@@ -27,8 +27,20 @@ type SubscriptionsAPIChangeSubscriptionRequest struct {
 	ctx context.Context
 	ApiService *SubscriptionsAPIService
 	subscriptionId string
+	environment *string
+	merchantAccountId *string
 	subscriptionChangeRequest *SubscriptionChangeRequest
 	idempotencyKey *string
+}
+
+func (r SubscriptionsAPIChangeSubscriptionRequest) Environment(environment string) SubscriptionsAPIChangeSubscriptionRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r SubscriptionsAPIChangeSubscriptionRequest) MerchantAccountId(merchantAccountId string) SubscriptionsAPIChangeSubscriptionRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r SubscriptionsAPIChangeSubscriptionRequest) SubscriptionChangeRequest(subscriptionChangeRequest SubscriptionChangeRequest) SubscriptionsAPIChangeSubscriptionRequest {
@@ -82,10 +94,18 @@ func (a *SubscriptionsAPIService) ChangeSubscriptionExecute(r SubscriptionsAPICh
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.subscriptionChangeRequest == nil {
 		return localVarReturnValue, nil, reportError("subscriptionChangeRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -211,8 +231,20 @@ func (a *SubscriptionsAPIService) ChangeSubscriptionExecute(r SubscriptionsAPICh
 type SubscriptionsAPICreateSubscriptionRequest struct {
 	ctx context.Context
 	ApiService *SubscriptionsAPIService
+	environment *string
+	merchantAccountId *string
 	subscriptionCreateRequest *SubscriptionCreateRequest
 	idempotencyKey *string
+}
+
+func (r SubscriptionsAPICreateSubscriptionRequest) Environment(environment string) SubscriptionsAPICreateSubscriptionRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r SubscriptionsAPICreateSubscriptionRequest) MerchantAccountId(merchantAccountId string) SubscriptionsAPICreateSubscriptionRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r SubscriptionsAPICreateSubscriptionRequest) SubscriptionCreateRequest(subscriptionCreateRequest SubscriptionCreateRequest) SubscriptionsAPICreateSubscriptionRequest {
@@ -263,10 +295,18 @@ func (a *SubscriptionsAPIService) CreateSubscriptionExecute(r SubscriptionsAPICr
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.subscriptionCreateRequest == nil {
 		return localVarReturnValue, nil, reportError("subscriptionCreateRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -393,7 +433,19 @@ type SubscriptionsAPIPreviewSubscriptionItemChangeRequest struct {
 	ctx context.Context
 	ApiService *SubscriptionsAPIService
 	subscriptionId string
+	environment *string
+	merchantAccountId *string
 	subscriptionItemChangePreviewRequest *SubscriptionItemChangePreviewRequest
+}
+
+func (r SubscriptionsAPIPreviewSubscriptionItemChangeRequest) Environment(environment string) SubscriptionsAPIPreviewSubscriptionItemChangeRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r SubscriptionsAPIPreviewSubscriptionItemChangeRequest) MerchantAccountId(merchantAccountId string) SubscriptionsAPIPreviewSubscriptionItemChangeRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r SubscriptionsAPIPreviewSubscriptionItemChangeRequest) SubscriptionItemChangePreviewRequest(subscriptionItemChangePreviewRequest SubscriptionItemChangePreviewRequest) SubscriptionsAPIPreviewSubscriptionItemChangeRequest {
@@ -441,10 +493,18 @@ func (a *SubscriptionsAPIService) PreviewSubscriptionItemChangeExecute(r Subscri
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.subscriptionItemChangePreviewRequest == nil {
 		return localVarReturnValue, nil, reportError("subscriptionItemChangePreviewRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

@@ -26,8 +26,20 @@ type WebhooksAPIService service
 type WebhooksAPICreateWebhookEndpointRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
+	environment *string
+	merchantAccountId *string
 	webhookEndpointCreateRequest *WebhookEndpointCreateRequest
 	idempotencyKey *string
+}
+
+func (r WebhooksAPICreateWebhookEndpointRequest) Environment(environment string) WebhooksAPICreateWebhookEndpointRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPICreateWebhookEndpointRequest) MerchantAccountId(merchantAccountId string) WebhooksAPICreateWebhookEndpointRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPICreateWebhookEndpointRequest) WebhookEndpointCreateRequest(webhookEndpointCreateRequest WebhookEndpointCreateRequest) WebhooksAPICreateWebhookEndpointRequest {
@@ -78,10 +90,18 @@ func (a *WebhooksAPIService) CreateWebhookEndpointExecute(r WebhooksAPICreateWeb
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.webhookEndpointCreateRequest == nil {
 		return localVarReturnValue, nil, reportError("webhookEndpointCreateRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -208,8 +228,20 @@ type WebhooksAPIDeleteWebhookEndpointRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
 	endpointId string
+	environment *string
+	merchantAccountId *string
 	body *map[string]interface{}
 	idempotencyKey *string
+}
+
+func (r WebhooksAPIDeleteWebhookEndpointRequest) Environment(environment string) WebhooksAPIDeleteWebhookEndpointRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIDeleteWebhookEndpointRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIDeleteWebhookEndpointRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIDeleteWebhookEndpointRequest) Body(body map[string]interface{}) WebhooksAPIDeleteWebhookEndpointRequest {
@@ -263,10 +295,18 @@ func (a *WebhooksAPIService) DeleteWebhookEndpointExecute(r WebhooksAPIDeleteWeb
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.body == nil {
 		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -392,8 +432,20 @@ func (a *WebhooksAPIService) DeleteWebhookEndpointExecute(r WebhooksAPIDeleteWeb
 type WebhooksAPIDispatchWebhookDeliveriesRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
+	environment *string
+	merchantAccountId *string
 	webhookDeliveriesDispatchRequest *WebhookDeliveriesDispatchRequest
 	idempotencyKey *string
+}
+
+func (r WebhooksAPIDispatchWebhookDeliveriesRequest) Environment(environment string) WebhooksAPIDispatchWebhookDeliveriesRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIDispatchWebhookDeliveriesRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIDispatchWebhookDeliveriesRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIDispatchWebhookDeliveriesRequest) WebhookDeliveriesDispatchRequest(webhookDeliveriesDispatchRequest WebhookDeliveriesDispatchRequest) WebhooksAPIDispatchWebhookDeliveriesRequest {
@@ -444,10 +496,18 @@ func (a *WebhooksAPIService) DispatchWebhookDeliveriesExecute(r WebhooksAPIDispa
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.webhookDeliveriesDispatchRequest == nil {
 		return localVarReturnValue, nil, reportError("webhookDeliveriesDispatchRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -574,6 +634,18 @@ type WebhooksAPIGetWebhookDeliveryRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
 	deliveryId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r WebhooksAPIGetWebhookDeliveryRequest) Environment(environment string) WebhooksAPIGetWebhookDeliveryRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIGetWebhookDeliveryRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIGetWebhookDeliveryRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIGetWebhookDeliveryRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -616,7 +688,15 @@ func (a *WebhooksAPIService) GetWebhookDeliveryExecute(r WebhooksAPIGetWebhookDe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -738,6 +818,18 @@ type WebhooksAPIGetWebhookEventRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
 	eventId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r WebhooksAPIGetWebhookEventRequest) Environment(environment string) WebhooksAPIGetWebhookEventRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIGetWebhookEventRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIGetWebhookEventRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIGetWebhookEventRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -780,7 +872,15 @@ func (a *WebhooksAPIService) GetWebhookEventExecute(r WebhooksAPIGetWebhookEvent
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -901,6 +1001,18 @@ func (a *WebhooksAPIService) GetWebhookEventExecute(r WebhooksAPIGetWebhookEvent
 type WebhooksAPIListWebhookDeliveriesRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
+	environment *string
+	merchantAccountId *string
+}
+
+func (r WebhooksAPIListWebhookDeliveriesRequest) Environment(environment string) WebhooksAPIListWebhookDeliveriesRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIListWebhookDeliveriesRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIListWebhookDeliveriesRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIListWebhookDeliveriesRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -940,7 +1052,15 @@ func (a *WebhooksAPIService) ListWebhookDeliveriesExecute(r WebhooksAPIListWebho
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1061,6 +1181,18 @@ func (a *WebhooksAPIService) ListWebhookDeliveriesExecute(r WebhooksAPIListWebho
 type WebhooksAPIListWebhookEndpointsRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
+	environment *string
+	merchantAccountId *string
+}
+
+func (r WebhooksAPIListWebhookEndpointsRequest) Environment(environment string) WebhooksAPIListWebhookEndpointsRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIListWebhookEndpointsRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIListWebhookEndpointsRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIListWebhookEndpointsRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -1100,7 +1232,15 @@ func (a *WebhooksAPIService) ListWebhookEndpointsExecute(r WebhooksAPIListWebhoo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1221,6 +1361,18 @@ func (a *WebhooksAPIService) ListWebhookEndpointsExecute(r WebhooksAPIListWebhoo
 type WebhooksAPIListWebhookEventTypesRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
+	environment *string
+	merchantAccountId *string
+}
+
+func (r WebhooksAPIListWebhookEventTypesRequest) Environment(environment string) WebhooksAPIListWebhookEventTypesRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIListWebhookEventTypesRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIListWebhookEventTypesRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIListWebhookEventTypesRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -1260,7 +1412,15 @@ func (a *WebhooksAPIService) ListWebhookEventTypesExecute(r WebhooksAPIListWebho
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1381,6 +1541,18 @@ func (a *WebhooksAPIService) ListWebhookEventTypesExecute(r WebhooksAPIListWebho
 type WebhooksAPIListWebhookEventsRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
+	environment *string
+	merchantAccountId *string
+}
+
+func (r WebhooksAPIListWebhookEventsRequest) Environment(environment string) WebhooksAPIListWebhookEventsRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIListWebhookEventsRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIListWebhookEventsRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIListWebhookEventsRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -1420,7 +1592,15 @@ func (a *WebhooksAPIService) ListWebhookEventsExecute(r WebhooksAPIListWebhookEv
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1541,8 +1721,20 @@ func (a *WebhooksAPIService) ListWebhookEventsExecute(r WebhooksAPIListWebhookEv
 type WebhooksAPIRedriveWebhookDeliveriesRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
+	environment *string
+	merchantAccountId *string
 	webhookDeliveriesRedriveRequest *WebhookDeliveriesRedriveRequest
 	idempotencyKey *string
+}
+
+func (r WebhooksAPIRedriveWebhookDeliveriesRequest) Environment(environment string) WebhooksAPIRedriveWebhookDeliveriesRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIRedriveWebhookDeliveriesRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIRedriveWebhookDeliveriesRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIRedriveWebhookDeliveriesRequest) WebhookDeliveriesRedriveRequest(webhookDeliveriesRedriveRequest WebhookDeliveriesRedriveRequest) WebhooksAPIRedriveWebhookDeliveriesRequest {
@@ -1593,10 +1785,18 @@ func (a *WebhooksAPIService) RedriveWebhookDeliveriesExecute(r WebhooksAPIRedriv
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.webhookDeliveriesRedriveRequest == nil {
 		return localVarReturnValue, nil, reportError("webhookDeliveriesRedriveRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -1723,8 +1923,20 @@ type WebhooksAPIReplayWebhookDeliveryRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
 	deliveryId string
+	environment *string
+	merchantAccountId *string
 	webhookDeliveryReplayRequest *WebhookDeliveryReplayRequest
 	idempotencyKey *string
+}
+
+func (r WebhooksAPIReplayWebhookDeliveryRequest) Environment(environment string) WebhooksAPIReplayWebhookDeliveryRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIReplayWebhookDeliveryRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIReplayWebhookDeliveryRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIReplayWebhookDeliveryRequest) WebhookDeliveryReplayRequest(webhookDeliveryReplayRequest WebhookDeliveryReplayRequest) WebhooksAPIReplayWebhookDeliveryRequest {
@@ -1778,10 +1990,18 @@ func (a *WebhooksAPIService) ReplayWebhookDeliveryExecute(r WebhooksAPIReplayWeb
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.webhookDeliveryReplayRequest == nil {
 		return localVarReturnValue, nil, reportError("webhookDeliveryReplayRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -1908,8 +2128,20 @@ type WebhooksAPIResendWebhookEventRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
 	eventId string
+	environment *string
+	merchantAccountId *string
 	webhookEventResendRequest *WebhookEventResendRequest
 	idempotencyKey *string
+}
+
+func (r WebhooksAPIResendWebhookEventRequest) Environment(environment string) WebhooksAPIResendWebhookEventRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIResendWebhookEventRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIResendWebhookEventRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIResendWebhookEventRequest) WebhookEventResendRequest(webhookEventResendRequest WebhookEventResendRequest) WebhooksAPIResendWebhookEventRequest {
@@ -1963,10 +2195,18 @@ func (a *WebhooksAPIService) ResendWebhookEventExecute(r WebhooksAPIResendWebhoo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.webhookEventResendRequest == nil {
 		return localVarReturnValue, nil, reportError("webhookEventResendRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -2093,8 +2333,20 @@ type WebhooksAPIRotateWebhookEndpointSecretRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
 	endpointId string
+	environment *string
+	merchantAccountId *string
 	webhookEndpointSecretRotateRequest *WebhookEndpointSecretRotateRequest
 	idempotencyKey *string
+}
+
+func (r WebhooksAPIRotateWebhookEndpointSecretRequest) Environment(environment string) WebhooksAPIRotateWebhookEndpointSecretRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIRotateWebhookEndpointSecretRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIRotateWebhookEndpointSecretRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIRotateWebhookEndpointSecretRequest) WebhookEndpointSecretRotateRequest(webhookEndpointSecretRotateRequest WebhookEndpointSecretRotateRequest) WebhooksAPIRotateWebhookEndpointSecretRequest {
@@ -2148,10 +2400,18 @@ func (a *WebhooksAPIService) RotateWebhookEndpointSecretExecute(r WebhooksAPIRot
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.webhookEndpointSecretRotateRequest == nil {
 		return localVarReturnValue, nil, reportError("webhookEndpointSecretRotateRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -2278,8 +2538,20 @@ type WebhooksAPITestWebhookEndpointRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
 	endpointId string
+	environment *string
+	merchantAccountId *string
 	webhookEndpointTestRequest *WebhookEndpointTestRequest
 	idempotencyKey *string
+}
+
+func (r WebhooksAPITestWebhookEndpointRequest) Environment(environment string) WebhooksAPITestWebhookEndpointRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPITestWebhookEndpointRequest) MerchantAccountId(merchantAccountId string) WebhooksAPITestWebhookEndpointRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPITestWebhookEndpointRequest) WebhookEndpointTestRequest(webhookEndpointTestRequest WebhookEndpointTestRequest) WebhooksAPITestWebhookEndpointRequest {
@@ -2333,10 +2605,18 @@ func (a *WebhooksAPIService) TestWebhookEndpointExecute(r WebhooksAPITestWebhook
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.webhookEndpointTestRequest == nil {
 		return localVarReturnValue, nil, reportError("webhookEndpointTestRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -2463,8 +2743,20 @@ type WebhooksAPIUpdateWebhookEndpointRequest struct {
 	ctx context.Context
 	ApiService *WebhooksAPIService
 	endpointId string
+	environment *string
+	merchantAccountId *string
 	webhookEndpointUpdateRequest *WebhookEndpointUpdateRequest
 	idempotencyKey *string
+}
+
+func (r WebhooksAPIUpdateWebhookEndpointRequest) Environment(environment string) WebhooksAPIUpdateWebhookEndpointRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r WebhooksAPIUpdateWebhookEndpointRequest) MerchantAccountId(merchantAccountId string) WebhooksAPIUpdateWebhookEndpointRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r WebhooksAPIUpdateWebhookEndpointRequest) WebhookEndpointUpdateRequest(webhookEndpointUpdateRequest WebhookEndpointUpdateRequest) WebhooksAPIUpdateWebhookEndpointRequest {
@@ -2518,10 +2810,18 @@ func (a *WebhooksAPIService) UpdateWebhookEndpointExecute(r WebhooksAPIUpdateWeb
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.webhookEndpointUpdateRequest == nil {
 		return localVarReturnValue, nil, reportError("webhookEndpointUpdateRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

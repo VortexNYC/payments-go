@@ -25,8 +25,20 @@ type CheckoutAPIService service
 type CheckoutAPICreateCheckoutSessionRequest struct {
 	ctx context.Context
 	ApiService *CheckoutAPIService
+	environment *string
+	merchantAccountId *string
 	createCheckoutSessionRequest *CreateCheckoutSessionRequest
 	idempotencyKey *string
+}
+
+func (r CheckoutAPICreateCheckoutSessionRequest) Environment(environment string) CheckoutAPICreateCheckoutSessionRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CheckoutAPICreateCheckoutSessionRequest) MerchantAccountId(merchantAccountId string) CheckoutAPICreateCheckoutSessionRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CheckoutAPICreateCheckoutSessionRequest) CreateCheckoutSessionRequest(createCheckoutSessionRequest CreateCheckoutSessionRequest) CheckoutAPICreateCheckoutSessionRequest {
@@ -77,10 +89,18 @@ func (a *CheckoutAPIService) CreateCheckoutSessionExecute(r CheckoutAPICreateChe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.createCheckoutSessionRequest == nil {
 		return localVarReturnValue, nil, reportError("createCheckoutSessionRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

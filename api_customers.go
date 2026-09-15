@@ -27,8 +27,20 @@ type CustomersAPIUpsertCustomerRequest struct {
 	ctx context.Context
 	ApiService *CustomersAPIService
 	customerId string
+	environment *string
+	merchantAccountId *string
 	customerUpsertRequest *CustomerUpsertRequest
 	idempotencyKey *string
+}
+
+func (r CustomersAPIUpsertCustomerRequest) Environment(environment string) CustomersAPIUpsertCustomerRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r CustomersAPIUpsertCustomerRequest) MerchantAccountId(merchantAccountId string) CustomersAPIUpsertCustomerRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r CustomersAPIUpsertCustomerRequest) CustomerUpsertRequest(customerUpsertRequest CustomerUpsertRequest) CustomersAPIUpsertCustomerRequest {
@@ -82,10 +94,18 @@ func (a *CustomersAPIService) UpsertCustomerExecute(r CustomersAPIUpsertCustomer
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.customerUpsertRequest == nil {
 		return localVarReturnValue, nil, reportError("customerUpsertRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

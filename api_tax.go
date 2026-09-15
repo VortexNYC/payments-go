@@ -27,8 +27,20 @@ type TaxAPIFinalizeInvoiceTaxRequest struct {
 	ctx context.Context
 	ApiService *TaxAPIService
 	invoiceId string
+	environment *string
+	merchantAccountId *string
 	taxFinalizeRequest *TaxFinalizeRequest
 	idempotencyKey *string
+}
+
+func (r TaxAPIFinalizeInvoiceTaxRequest) Environment(environment string) TaxAPIFinalizeInvoiceTaxRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r TaxAPIFinalizeInvoiceTaxRequest) MerchantAccountId(merchantAccountId string) TaxAPIFinalizeInvoiceTaxRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r TaxAPIFinalizeInvoiceTaxRequest) TaxFinalizeRequest(taxFinalizeRequest TaxFinalizeRequest) TaxAPIFinalizeInvoiceTaxRequest {
@@ -82,10 +94,18 @@ func (a *TaxAPIService) FinalizeInvoiceTaxExecute(r TaxAPIFinalizeInvoiceTaxRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.taxFinalizeRequest == nil {
 		return localVarReturnValue, nil, reportError("taxFinalizeRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -213,10 +233,16 @@ type TaxAPIGetMerchantAccountTaxProfileRequest struct {
 	ApiService *TaxAPIService
 	merchantAccountId string
 	environment *string
+	merchantAccountId2 *string
 }
 
 func (r TaxAPIGetMerchantAccountTaxProfileRequest) Environment(environment string) TaxAPIGetMerchantAccountTaxProfileRequest {
 	r.environment = &environment
+	return r
+}
+
+func (r TaxAPIGetMerchantAccountTaxProfileRequest) MerchantAccountId2(merchantAccountId2 string) TaxAPIGetMerchantAccountTaxProfileRequest {
+	r.merchantAccountId2 = &merchantAccountId2
 	return r
 }
 
@@ -263,8 +289,12 @@ func (a *TaxAPIService) GetMerchantAccountTaxProfileExecute(r TaxAPIGetMerchantA
 	if r.environment == nil {
 		return localVarReturnValue, nil, reportError("environment is required and must be specified")
 	}
+	if r.merchantAccountId2 == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId2 is required and must be specified")
+	}
 
 	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId2, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -386,8 +416,20 @@ type TaxAPIQuoteInvoiceTaxRequest struct {
 	ctx context.Context
 	ApiService *TaxAPIService
 	invoiceId string
+	environment *string
+	merchantAccountId *string
 	taxQuoteRequest *TaxQuoteRequest
 	idempotencyKey *string
+}
+
+func (r TaxAPIQuoteInvoiceTaxRequest) Environment(environment string) TaxAPIQuoteInvoiceTaxRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r TaxAPIQuoteInvoiceTaxRequest) MerchantAccountId(merchantAccountId string) TaxAPIQuoteInvoiceTaxRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r TaxAPIQuoteInvoiceTaxRequest) TaxQuoteRequest(taxQuoteRequest TaxQuoteRequest) TaxAPIQuoteInvoiceTaxRequest {
@@ -441,10 +483,18 @@ func (a *TaxAPIService) QuoteInvoiceTaxExecute(r TaxAPIQuoteInvoiceTaxRequest) (
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 	if r.taxQuoteRequest == nil {
 		return localVarReturnValue, nil, reportError("taxQuoteRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -571,8 +621,20 @@ type TaxAPIUpsertMerchantAccountTaxProfileRequest struct {
 	ctx context.Context
 	ApiService *TaxAPIService
 	merchantAccountId string
+	environment *string
+	merchantAccountId2 *string
 	merchantTaxProfileRequest *MerchantTaxProfileRequest
 	idempotencyKey *string
+}
+
+func (r TaxAPIUpsertMerchantAccountTaxProfileRequest) Environment(environment string) TaxAPIUpsertMerchantAccountTaxProfileRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r TaxAPIUpsertMerchantAccountTaxProfileRequest) MerchantAccountId2(merchantAccountId2 string) TaxAPIUpsertMerchantAccountTaxProfileRequest {
+	r.merchantAccountId2 = &merchantAccountId2
+	return r
 }
 
 func (r TaxAPIUpsertMerchantAccountTaxProfileRequest) MerchantTaxProfileRequest(merchantTaxProfileRequest MerchantTaxProfileRequest) TaxAPIUpsertMerchantAccountTaxProfileRequest {
@@ -626,10 +688,18 @@ func (a *TaxAPIService) UpsertMerchantAccountTaxProfileExecute(r TaxAPIUpsertMer
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId2 == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId2 is required and must be specified")
+	}
 	if r.merchantTaxProfileRequest == nil {
 		return localVarReturnValue, nil, reportError("merchantTaxProfileRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId2, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

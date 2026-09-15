@@ -27,6 +27,18 @@ type ReceiptsAPIGetPaymentReceiptRequest struct {
 	ctx context.Context
 	ApiService *ReceiptsAPIService
 	receiptId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r ReceiptsAPIGetPaymentReceiptRequest) Environment(environment string) ReceiptsAPIGetPaymentReceiptRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r ReceiptsAPIGetPaymentReceiptRequest) MerchantAccountId(merchantAccountId string) ReceiptsAPIGetPaymentReceiptRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r ReceiptsAPIGetPaymentReceiptRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -69,7 +81,15 @@ func (a *ReceiptsAPIService) GetPaymentReceiptExecute(r ReceiptsAPIGetPaymentRec
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -191,6 +211,18 @@ type ReceiptsAPIListInvoiceReceiptsRequest struct {
 	ctx context.Context
 	ApiService *ReceiptsAPIService
 	invoiceId string
+	environment *string
+	merchantAccountId *string
+}
+
+func (r ReceiptsAPIListInvoiceReceiptsRequest) Environment(environment string) ReceiptsAPIListInvoiceReceiptsRequest {
+	r.environment = &environment
+	return r
+}
+
+func (r ReceiptsAPIListInvoiceReceiptsRequest) MerchantAccountId(merchantAccountId string) ReceiptsAPIListInvoiceReceiptsRequest {
+	r.merchantAccountId = &merchantAccountId
+	return r
 }
 
 func (r ReceiptsAPIListInvoiceReceiptsRequest) Execute() (*ApiWriteEnvelope, *http.Response, error) {
@@ -233,7 +265,15 @@ func (a *ReceiptsAPIService) ListInvoiceReceiptsExecute(r ReceiptsAPIListInvoice
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.environment == nil {
+		return localVarReturnValue, nil, reportError("environment is required and must be specified")
+	}
+	if r.merchantAccountId == nil {
+		return localVarReturnValue, nil, reportError("merchantAccountId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "environment", r.environment, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "merchantAccountId", r.merchantAccountId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

@@ -1,4 +1,4 @@
-module github.com/vortexnyc/payments-go
+module github.com/vortexnyc/vortex-go
 
 go 1.23
 

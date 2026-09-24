@@ -17,7 +17,7 @@ import (
 	vortex "github.com/vortexnyc/vortex-go"
 )
 
-// Point at the sandbox host for test data; vb_test_ keys are sandbox-only.
+// Point at the sandbox host for test data; vp_test_ keys are sandbox-only.
 cfg := vortex.NewConfiguration()
 cfg.Host = "api.sandbox.vortex.nyc"
 cfg.Scheme = "https"

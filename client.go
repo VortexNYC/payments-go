@@ -89,6 +89,8 @@ type APIClient struct {
 
 	TaxAPI *TaxAPIService
 
+	UsageAPI *UsageAPIService
+
 	WebhooksAPI *WebhooksAPIService
 }
 
@@ -128,6 +130,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ReceiptsAPI = (*ReceiptsAPIService)(&c.common)
 	c.SubscriptionsAPI = (*SubscriptionsAPIService)(&c.common)
 	c.TaxAPI = (*TaxAPIService)(&c.common)
+	c.UsageAPI = (*UsageAPIService)(&c.common)
 	c.WebhooksAPI = (*WebhooksAPIService)(&c.common)
 
 	return c

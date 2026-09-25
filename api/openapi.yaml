@@ -3232,6 +3232,93 @@ paths:
               query: { environment: "sandbox", merchantAccountId: "..." },
             });
   /v1/invoices:
+    get:
+      operationId: listInvoices
+      parameters:
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: customerId
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: status
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: limit
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: cursor
+          required: false
+          schema:
+            type: string
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InvoiceListResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: List invoices across the merchant
+      tags:
+        - billing
+        - invoices
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/invoices?customerId=...&status=...&limit=...&cursor=...&environment=sandbox&merchantAccountId=..." \
+              -X GET \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { listInvoices, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await listInvoices({
+              client: vortex,
+              query: { customerId: "...", status: "...", limit: "...", cursor: "...", environment: "sandbox", merchantAccountId: "..." },
+            });
     post:
       operationId: createInvoice
       parameters:
@@ -6760,6 +6847,93 @@ paths:
               body: {"lines":[{"priceId":"bprice_seats","quantity":15,"unitAmount":4500}],"terms":"Net 30, revised seat count"},
             });
   /v1/subscriptions:
+    get:
+      operationId: listSubscriptions
+      parameters:
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: customerId
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: status
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: limit
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: cursor
+          required: false
+          schema:
+            type: string
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubscriptionListResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: List subscriptions across the merchant
+      tags:
+        - billing
+        - subscriptions
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/subscriptions?customerId=...&status=...&limit=...&cursor=...&environment=sandbox&merchantAccountId=..." \
+              -X GET \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { listSubscriptions, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await listSubscriptions({
+              client: vortex,
+              query: { customerId: "...", status: "...", limit: "...", cursor: "...", environment: "sandbox", merchantAccountId: "..." },
+            });
     post:
       operationId: createSubscription
       parameters:
@@ -6835,6 +7009,179 @@ paths:
               client: vortex,
               query: { environment: "sandbox", merchantAccountId: "..." },
               body: {"customerExternalId":"cus_123","subscriptionExternalId":"sub_123","planCode":"price_core_monthly","collectionMode":"automatic"},
+            });
+  /v1/usage-events:
+    get:
+      operationId: listUsageEvents
+      parameters:
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: customerId
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: meterId
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: eventName
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: limit
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: cursor
+          required: false
+          schema:
+            type: string
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsageEventListResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: List usage events across the merchant
+      tags:
+        - billing
+        - usage
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/usage-events?customerId=...&meterId=...&eventName=...&limit=...&cursor=...&environment=sandbox&merchantAccountId=..." \
+              -X GET \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { listUsageEvents, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await listUsageEvents({
+              client: vortex,
+              query: { customerId: "...", meterId: "...", eventName: "...", limit: "...", cursor: "...", environment: "sandbox", merchantAccountId: "..." },
+            });
+    post:
+      operationId: createUsageEvent
+      parameters:
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        content:
+          application/json:
+            examples:
+              default:
+                value:
+                  customerId: bcust_123
+                  billingAccountId: bacc_123
+                  meterId: meter_api_calls
+                  eventName: api.call
+                  quantity: 42
+                  occurredAt: 2026-09-01T12:00:00Z
+            schema:
+              $ref: "#/components/schemas/UsageEventCreateRequest"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsageEventResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: Record a metered usage event (idempotent by key)
+      tags:
+        - billing
+        - usage
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/usage-events?environment=sandbox&merchantAccountId=..." \
+              -X POST \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{"customerId":"bcust_123","billingAccountId":"bacc_123","meterId":"meter_api_calls","eventName":"api.call","quantity":42,"occurredAt":"2026-09-01T12:00:00Z"}'
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { createUsageEvent, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await createUsageEvent({
+              client: vortex,
+              query: { environment: "sandbox", merchantAccountId: "..." },
+              body: {"customerId":"bcust_123","billingAccountId":"bacc_123","meterId":"meter_api_calls","eventName":"api.call","quantity":42,"occurredAt":"2026-09-01T12:00:00Z"},
             });
   /v1/webhook-deliveries:
     get:
@@ -11777,6 +12124,54 @@ components:
       additionalProperties: false
       properties: {}
       type: object
+    UsageEventCreateRequest:
+      additionalProperties: false
+      example:
+        customerId: customerId
+        billingAccountId: billingAccountId
+        meterId: meterId
+        eventName: eventName
+        quantity: 0.8008281904610115
+        occurredAt: 2000-01-23T04:56:07.000+00:00
+        idempotencyKey: idempotencyKey
+        usageEventId: usageEventId
+        subscriptionId: subscriptionId
+        subscriptionItemId: subscriptionItemId
+        metadata:
+          key: metadata
+      properties:
+        customerId:
+          type: string
+        billingAccountId:
+          type: string
+        meterId:
+          type: string
+        eventName:
+          type: string
+        quantity:
+          type: number
+        occurredAt:
+          format: date-time
+          type: string
+        idempotencyKey:
+          type: string
+        usageEventId:
+          type: string
+        subscriptionId:
+          type: string
+        subscriptionItemId:
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+      required:
+        - billingAccountId
+        - customerId
+        - eventName
+        - idempotencyKey
+        - meterId
+        - occurredAt
+        - quantity
     InvoiceCreateRequest:
       additionalProperties: false
       example:
@@ -13103,6 +13498,14 @@ components:
     PriceResponse:
       $ref: "#/components/schemas/ApiWriteEnvelope"
     SubscriptionResponse:
+      $ref: "#/components/schemas/ApiWriteEnvelope"
+    SubscriptionListResponse:
+      $ref: "#/components/schemas/ApiWriteEnvelope"
+    UsageEventResponse:
+      $ref: "#/components/schemas/ApiWriteEnvelope"
+    UsageEventListResponse:
+      $ref: "#/components/schemas/ApiWriteEnvelope"
+    InvoiceListResponse:
       $ref: "#/components/schemas/ApiWriteEnvelope"
     SubscriptionItemChangePreviewResponse:
       $ref: "#/components/schemas/ApiWriteEnvelope"

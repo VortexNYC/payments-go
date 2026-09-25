@@ -7010,6 +7010,413 @@ paths:
               query: { environment: "sandbox", merchantAccountId: "..." },
               body: {"customerExternalId":"cus_123","subscriptionExternalId":"sub_123","planCode":"price_core_monthly","collectionMode":"automatic"},
             });
+  /v1/tax-transactions:
+    get:
+      operationId: listTaxTransactions
+      parameters:
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: status
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: sourceDocumentId
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: limit
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: cursor
+          required: false
+          schema:
+            type: string
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaxTransactionListResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: List tax transactions across the merchant
+      tags:
+        - billing
+        - tax
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/tax-transactions?status=...&sourceDocumentId=...&limit=...&cursor=...&environment=sandbox&merchantAccountId=..." \
+              -X GET \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { listTaxTransactions, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await listTaxTransactions({
+              client: vortex,
+              query: { status: "...", sourceDocumentId: "...", limit: "...", cursor: "...", environment: "sandbox", merchantAccountId: "..." },
+            });
+    post:
+      operationId: quoteTaxTransaction
+      parameters:
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        content:
+          application/json:
+            examples:
+              default:
+                value:
+                  sourceDocumentId: binv_123
+                  sourceDocumentType: invoice
+                  idempotencyKey: tax-quote-binv_123
+                  currency: USD
+                  customerTaxAddress:
+                    line1: 897 Broadway
+                    city: New York
+                    region: NY
+                    postalCode: "10003"
+                    country: US
+                  lines:
+                    - sourceLineId: line-1
+                      amount: 50000
+                      quantity: 1
+                      classificationKey: saas
+            schema:
+              $ref: "#/components/schemas/TaxTransactionQuoteRequest"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaxTransactionResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: Quote tax for a source document (creates a quoted transaction)
+      tags:
+        - billing
+        - tax
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/tax-transactions?environment=sandbox&merchantAccountId=..." \
+              -X POST \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{"sourceDocumentId":"binv_123","sourceDocumentType":"invoice","idempotencyKey":"tax-quote-binv_123","currency":"USD","customerTaxAddress":{"line1":"897 Broadway","city":"New York","region":"NY","postalCode":"10003","country":"US"},"lines":[{"sourceLineId":"line-1","amount":50000,"quantity":1,"classificationKey":"saas"}]}'
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { quoteTaxTransaction, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await quoteTaxTransaction({
+              client: vortex,
+              query: { environment: "sandbox", merchantAccountId: "..." },
+              body: {"sourceDocumentId":"binv_123","sourceDocumentType":"invoice","idempotencyKey":"tax-quote-binv_123","currency":"USD","customerTaxAddress":{"line1":"897 Broadway","city":"New York","region":"NY","postalCode":"10003","country":"US"},"lines":[{"sourceLineId":"line-1","amount":50000,"quantity":1,"classificationKey":"saas"}]},
+            });
+  /v1/tax-transactions/{taxTransactionId}:
+    get:
+      operationId: getTaxTransaction
+      parameters:
+        - explode: false
+          in: path
+          name: taxTransactionId
+          required: true
+          schema:
+            type: string
+          style: simple
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaxTransactionResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: Get a tax transaction
+      tags:
+        - billing
+        - tax
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/tax-transactions/{taxTransactionId}?environment=sandbox&merchantAccountId=..." \
+              -X GET \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { getTaxTransaction, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await getTaxTransaction({
+              client: vortex,
+              path: { taxTransactionId: "..." },
+              query: { environment: "sandbox", merchantAccountId: "..." },
+            });
+  /v1/tax-transactions/{taxTransactionId}/finalize:
+    post:
+      operationId: finalizeTaxTransaction
+      parameters:
+        - explode: false
+          in: path
+          name: taxTransactionId
+          required: true
+          schema:
+            type: string
+          style: simple
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        content:
+          application/json:
+            examples:
+              default:
+                value: {}
+            schema:
+              $ref: "#/components/schemas/TaxTransactionFinalizeRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaxTransactionResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: Commit a quoted tax transaction
+      tags:
+        - billing
+        - tax
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/tax-transactions/{taxTransactionId}/finalize?environment=sandbox&merchantAccountId=..." \
+              -X POST \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{}'
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { finalizeTaxTransaction, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await finalizeTaxTransaction({
+              client: vortex,
+              path: { taxTransactionId: "..." },
+              query: { environment: "sandbox", merchantAccountId: "..." },
+              body: {},
+            });
+  /v1/tax-transactions/{taxTransactionId}/reverse:
+    post:
+      operationId: reverseTaxTransaction
+      parameters:
+        - explode: false
+          in: path
+          name: taxTransactionId
+          required: true
+          schema:
+            type: string
+          style: simple
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        content:
+          application/json:
+            examples:
+              default:
+                value:
+                  idempotencyKey: tax-reverse-1
+                  sourceDocumentId: bcn_123
+            schema:
+              $ref: "#/components/schemas/TaxTransactionReverseRequest"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaxTransactionResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: Reverse a finalized tax transaction (creates a credit-note reversal)
+      tags:
+        - billing
+        - tax
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/tax-transactions/{taxTransactionId}/reverse?environment=sandbox&merchantAccountId=..." \
+              -X POST \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{"idempotencyKey":"tax-reverse-1","sourceDocumentId":"bcn_123"}'
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { reverseTaxTransaction, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await reverseTaxTransaction({
+              client: vortex,
+              path: { taxTransactionId: "..." },
+              query: { environment: "sandbox", merchantAccountId: "..." },
+              body: {"idempotencyKey":"tax-reverse-1","sourceDocumentId":"bcn_123"},
+            });
   /v1/usage-events:
     get:
       operationId: listUsageEvents
@@ -12315,6 +12722,117 @@ components:
           type: string
       required:
         - customerTaxAddress
+    TaxTransactionQuoteRequest:
+      additionalProperties: {}
+      example:
+        sourceDocumentId: sourceDocumentId
+        sourceDocumentType: invoice
+        idempotencyKey: idempotencyKey
+        currency: currency
+        lines:
+          - sourceLineId: sourceLineId
+            amount: 0
+            quantity: 6
+            description: description
+            classificationKey: classificationKey
+            productExternalId: productExternalId
+            taxBehavior: exclusive
+          - sourceLineId: sourceLineId
+            amount: 0
+            quantity: 6
+            description: description
+            classificationKey: classificationKey
+            productExternalId: productExternalId
+            taxBehavior: exclusive
+        customerTaxAddress:
+          line1: line1
+          line2: line2
+          city: city
+          region: region
+          postalCode: postalCode
+          country: country
+        customerExternalId: customerExternalId
+        customerName: customerName
+        customerEmail: customerEmail
+        customerType: consumer
+        customerTaxExempt: true
+        customerTaxExemptionRef: customerTaxExemptionRef
+        taxBehavior: null
+        taxIdValidation: full
+        taxIdUnverifiableTreatment: strict
+        fallbackOnProviderUnavailable: true
+      properties:
+        sourceDocumentId:
+          type: string
+        sourceDocumentType:
+          enum:
+            - invoice
+            - credit_note
+          type: string
+        idempotencyKey:
+          type: string
+        currency:
+          type: string
+        lines:
+          items:
+            $ref: "#/components/schemas/TaxTransactionQuoteRequest_lines_inner"
+          type: array
+          default: null
+        customerTaxAddress:
+          $ref: "#/components/schemas/TaxAddress"
+        customerExternalId:
+          type: string
+        customerName:
+          type: string
+        customerEmail:
+          type: string
+        customerType:
+          enum:
+            - consumer
+            - business
+            - government
+          type: string
+        customerTaxExempt:
+          type: boolean
+        customerTaxExemptionRef:
+          type: string
+        taxBehavior:
+          $ref: "#/components/schemas/TaxBehavior"
+        taxIdValidation:
+          enum:
+            - full
+            - format
+            - none
+          type: string
+        taxIdUnverifiableTreatment:
+          enum:
+            - strict
+            - permissive
+          type: string
+        fallbackOnProviderUnavailable:
+          type: boolean
+      required:
+        - currency
+        - customerTaxAddress
+        - idempotencyKey
+        - lines
+        - sourceDocumentId
+    TaxTransactionFinalizeRequest:
+      additionalProperties: false
+      properties: {}
+      type: object
+    TaxTransactionReverseRequest:
+      additionalProperties: false
+      example:
+        sourceDocumentId: sourceDocumentId
+        idempotencyKey: idempotencyKey
+      properties:
+        sourceDocumentId:
+          type: string
+        idempotencyKey:
+          type: string
+      required:
+        - sourceDocumentId
     TaxLineEvidence:
       additionalProperties: false
       example:
@@ -13507,6 +14025,10 @@ components:
       $ref: "#/components/schemas/ApiWriteEnvelope"
     InvoiceListResponse:
       $ref: "#/components/schemas/ApiWriteEnvelope"
+    TaxTransactionResponse:
+      $ref: "#/components/schemas/ApiWriteEnvelope"
+    TaxTransactionListResponse:
+      $ref: "#/components/schemas/ApiWriteEnvelope"
     SubscriptionItemChangePreviewResponse:
       $ref: "#/components/schemas/ApiWriteEnvelope"
     SubscriptionChangeResponse:
@@ -13746,6 +14268,35 @@ components:
       required:
         - interval
         - intervalCount
+    TaxTransactionQuoteRequest_lines_inner:
+      additionalProperties: false
+      example:
+        sourceLineId: sourceLineId
+        amount: 0
+        quantity: 6
+        description: description
+        classificationKey: classificationKey
+        productExternalId: productExternalId
+        taxBehavior: exclusive
+      properties:
+        sourceLineId:
+          type: string
+        amount:
+          type: integer
+        quantity:
+          type: integer
+        description:
+          type: string
+        classificationKey:
+          type: string
+        productExternalId:
+          type: string
+        taxBehavior:
+          $ref: "#/components/schemas/TaxBehavior"
+      required:
+        - amount
+        - quantity
+        - sourceLineId
     OpenApiInvoiceTaxResponse_allOf_data:
       example:
         tax:

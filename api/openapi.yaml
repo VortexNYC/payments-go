@@ -3171,6 +3171,66 @@ paths:
               query: { environment: "sandbox", merchantAccountId: "..." },
               body: {"customerExternalId":"cus_123","entitlementKey":"pro","source":"operator","sourceRef":"launch-proof","reason":"downgrade"},
             });
+  /v1/events:
+    get:
+      operationId: listWebhookEvents
+      parameters:
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebhookEventListResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: List outbound webhook events
+      tags:
+        - billing
+        - webhooks
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/events?environment=sandbox&merchantAccountId=..." \
+              -X GET \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { listWebhookEvents, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await listWebhookEvents({
+              client: vortex,
+              query: { environment: "sandbox", merchantAccountId: "..." },
+            });
   /v1/invoices:
     post:
       operationId: createInvoice
@@ -8671,66 +8731,6 @@ paths:
               path: { endpointId: "..." },
               query: { environment: "sandbox", merchantAccountId: "..." },
               body: {"gracePeriodSeconds":3600},
-            });
-  /v1/events:
-    get:
-      operationId: listWebhookEvents
-      parameters:
-        - explode: true
-          in: query
-          name: environment
-          required: true
-          schema:
-            type: string
-          style: form
-        - explode: true
-          in: query
-          name: merchantAccountId
-          required: true
-          schema:
-            type: string
-          style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/WebhookEventListResponse"
-          description: Success
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/Conflict"
-        "422":
-          $ref: "#/components/responses/ValidationFailure"
-        "429":
-          $ref: "#/components/responses/RateLimited"
-        default:
-          $ref: "#/components/responses/ApiError"
-      security:
-        - api-key: []
-      summary: List outbound webhook events
-      tags:
-        - billing
-        - webhooks
-      x-codeSamples:
-        - lang: Shell
-          label: curl
-          source: |-
-            curl "https://api.vortex.nyc/v1/events?environment=sandbox&merchantAccountId=..." \
-              -X GET \
-              -H "Authorization: Bearer $VORTEX_API_KEY" \
-        - lang: TypeScript
-          label: TypeScript
-          source: |-
-            import { listWebhookEvents, createVortex } from "@vortex-api/vortex/2026-08";
-
-            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
-            const { data } = await listWebhookEvents({
-              client: vortex,
-              query: { environment: "sandbox", merchantAccountId: "..." },
             });
   /v1/events/{eventId}:
     get:

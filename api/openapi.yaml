@@ -3882,6 +3882,79 @@ paths:
               body: {"voidedByRef":"internal-integration","reason":"customer_requested"},
             });
   /v1/merchant-accounts:
+    get:
+      operationId: listMerchantAccounts
+      parameters:
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: limit
+          required: false
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: cursor
+          required: false
+          schema:
+            type: string
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MerchantAccountListResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: List merchant accounts for the caller's organization
+      tags:
+        - billing
+        - payments-readiness
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/merchant-accounts?limit=...&cursor=...&environment=sandbox&merchantAccountId=..." \
+              -X GET \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { listMerchantAccounts, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await listMerchantAccounts({
+              client: vortex,
+              query: { limit: "...", cursor: "...", environment: "sandbox", merchantAccountId: "..." },
+            });
     post:
       operationId: createMerchantAccount
       parameters:
@@ -3963,6 +4036,157 @@ paths:
               client: vortex,
               query: { environment: "sandbox", merchantAccountId: "..." },
               body: {"environment":"sandbox","externalMerchantRef":"seal_org_1","displayName":"Acme Inc.","legalEntityType":"CORPORATION","country":"USA","merchantMode":"processing","defaultCurrency":"USD","metadata":{"sourceSystem":"seal","sealOrganizationId":"seal_org_1"}},
+            });
+  /v1/merchant-accounts/{merchantAccountId}:
+    get:
+      operationId: getMerchantAccount
+      parameters:
+        - explode: false
+          in: path
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: simple
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MerchantAccountResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: Get a merchant account snapshot
+      tags:
+        - billing
+        - payments-readiness
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/merchant-accounts/{merchantAccountId}?environment=sandbox&merchantAccountId=..." \
+              -X GET \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { getMerchantAccount, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await getMerchantAccount({
+              client: vortex,
+              path: { merchantAccountId: "..." },
+              query: { environment: "sandbox", merchantAccountId: "..." },
+            });
+    patch:
+      operationId: updateMerchantAccount
+      parameters:
+        - explode: false
+          in: path
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: simple
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        content:
+          application/json:
+            examples:
+              default:
+                value:
+                  displayName: Acme Inc.
+                  phone: "+12125550123"
+                  taxId: "123456789"
+            schema:
+              $ref: "#/components/schemas/MerchantAccountUpdateRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MerchantAccountResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: Update merchant account profile fields (draft-friendly)
+      tags:
+        - billing
+        - payments-readiness
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/merchant-accounts/{merchantAccountId}?environment=sandbox&merchantAccountId=..." \
+              -X PATCH \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{"displayName":"Acme Inc.","phone":"+12125550123","taxId":"123456789"}'
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { updateMerchantAccount, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await updateMerchantAccount({
+              client: vortex,
+              path: { merchantAccountId: "..." },
+              query: { environment: "sandbox", merchantAccountId: "..." },
+              body: {"displayName":"Acme Inc.","phone":"+12125550123","taxId":"123456789"},
             });
   /v1/merchant-accounts/{merchantAccountId}/capabilities:
     get:
@@ -4113,6 +4337,165 @@ paths:
               path: { merchantAccountId: "..." },
               query: { environment: "sandbox", merchantAccountId: "..." },
               body: {"environment":"sandbox","createdByRef":"seal:org_1"},
+            });
+  /v1/merchant-accounts/{merchantAccountId}/onboarding/{onboardingId}:
+    get:
+      operationId: getMerchantOnboarding
+      parameters:
+        - explode: false
+          in: path
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: simple
+        - explode: false
+          in: path
+          name: onboardingId
+          required: true
+          schema:
+            type: string
+          style: simple
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MerchantOnboardingResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: Get onboarding session state and outstanding requirements
+      tags:
+        - billing
+        - payments-readiness
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/merchant-accounts/{merchantAccountId}/onboarding/{onboardingId}?environment=sandbox&merchantAccountId=..." \
+              -X GET \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { getMerchantOnboarding, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await getMerchantOnboarding({
+              client: vortex,
+              path: { merchantAccountId: "...", onboardingId: "..." },
+              query: { environment: "sandbox", merchantAccountId: "..." },
+            });
+  /v1/merchant-accounts/{merchantAccountId}/onboarding/submit:
+    post:
+      operationId: submitMerchantOnboarding
+      parameters:
+        - explode: false
+          in: path
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: simple
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        content:
+          application/json:
+            examples:
+              default:
+                value:
+                  submittedByType: merchant
+            schema:
+              $ref: "#/components/schemas/MerchantOnboardingSubmitRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MerchantOnboardingResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary:
+        Submit a draft merchant for underwriting — the activation step after
+        create
+      tags:
+        - billing
+        - payments-readiness
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/merchant-accounts/{merchantAccountId}/onboarding/submit?environment=sandbox&merchantAccountId=..." \
+              -X POST \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{"submittedByType":"merchant"}'
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { submitMerchantOnboarding, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await submitMerchantOnboarding({
+              client: vortex,
+              path: { merchantAccountId: "..." },
+              query: { environment: "sandbox", merchantAccountId: "..." },
+              body: {"submittedByType":"merchant"},
             });
   /v1/merchant-accounts/{merchantAccountId}/payout-profile:
     get:
@@ -11620,6 +12003,202 @@ components:
         - environment
         - legalEntityType
         - merchantMode
+    MerchantAccountUpdateRequest:
+      additionalProperties: false
+      example:
+        environment: sandbox
+        displayName: displayName
+        merchantMode: merchantMode
+        doingBusinessAs: doingBusinessAs
+        businessPhone: businessPhone
+        businessTaxId: businessTaxId
+        phone: phone
+        taxId: taxId
+        email: email
+        firstName: firstName
+        lastName: lastName
+        mcc: mcc
+        url: url
+        maxTransactionAmount: 0.8008281904610115
+        achMaxTransactionAmount: 6.027456183070403
+        annualCardVolume: 1.4658129805029452
+        principalPercentageOwnership: 5.962133916683182
+        hasAcceptedCreditCardsPreviously: true
+        acceptsAch: true
+        dateOfBirth: ""
+        incorporationDate: ""
+        businessAddress: ""
+        personalAddress: ""
+        settlementBankAccount: ""
+        associatedIdentities:
+          - identityRoles:
+              - identityRoles
+              - identityRoles
+            relationType: relationType
+            firstName: firstName
+            lastName: lastName
+            title: title
+            email: email
+            phone: phone
+            taxId: taxId
+            principalPercentageOwnership: 9.301444243932576
+            dateOfBirth:
+              day: 5.637376656633329
+              month: 2.3021358869347655
+              year: 7.061401241503109
+            personalAddress:
+              line1: line1
+              line2: line2
+              city: city
+              region: region
+              postalCode: postalCode
+              country: country
+          - identityRoles:
+              - identityRoles
+              - identityRoles
+            relationType: relationType
+            firstName: firstName
+            lastName: lastName
+            title: title
+            email: email
+            phone: phone
+            taxId: taxId
+            principalPercentageOwnership: 9.301444243932576
+            dateOfBirth:
+              day: 5.637376656633329
+              month: 2.3021358869347655
+              year: 7.061401241503109
+            personalAddress:
+              line1: line1
+              line2: line2
+              city: city
+              region: region
+              postalCode: postalCode
+              country: country
+        underwriting: ""
+        metadata:
+          key: metadata
+      properties:
+        environment:
+          enum:
+            - sandbox
+            - production
+          type: string
+        displayName:
+          type: string
+        merchantMode:
+          type: string
+        doingBusinessAs:
+          nullable: true
+          type: string
+        businessPhone:
+          nullable: true
+          type: string
+        businessTaxId:
+          nullable: true
+          type: string
+        phone:
+          nullable: true
+          type: string
+        taxId:
+          nullable: true
+          type: string
+        email:
+          nullable: true
+          type: string
+        firstName:
+          nullable: true
+          type: string
+        lastName:
+          nullable: true
+          type: string
+        mcc:
+          nullable: true
+          type: string
+        url:
+          nullable: true
+          type: string
+        maxTransactionAmount:
+          nullable: true
+          type: number
+        achMaxTransactionAmount:
+          nullable: true
+          type: number
+        annualCardVolume:
+          nullable: true
+          type: number
+        principalPercentageOwnership:
+          nullable: true
+          type: number
+        hasAcceptedCreditCardsPreviously:
+          nullable: true
+          type: boolean
+        acceptsAch:
+          nullable: true
+          type: boolean
+        dateOfBirth:
+          allOf:
+            - $ref: "#/components/schemas/MerchantProfileDate"
+          nullable: true
+        incorporationDate:
+          allOf:
+            - $ref: "#/components/schemas/MerchantProfileDate"
+          nullable: true
+        businessAddress:
+          allOf:
+            - $ref: "#/components/schemas/MerchantAddress"
+          nullable: true
+        personalAddress:
+          allOf:
+            - $ref: "#/components/schemas/MerchantAddress"
+          nullable: true
+        settlementBankAccount:
+          allOf:
+            - $ref: "#/components/schemas/MerchantSettlementBankAccount"
+          nullable: true
+        associatedIdentities:
+          items:
+            $ref: "#/components/schemas/MerchantAssociatedIdentity"
+          nullable: true
+          type: array
+          default: null
+        underwriting:
+          allOf:
+            - $ref: "#/components/schemas/MerchantUnderwritingData"
+          nullable: true
+        metadata:
+          additionalProperties:
+            type: string
+          nullable: true
+    MerchantOnboardingSubmitRequest:
+      additionalProperties: false
+      example:
+        environment: sandbox
+        submittedByType: merchant
+        idempotencyKey: idempotencyKey
+        merchantAgreementIpAddress: merchantAgreementIpAddress
+        merchantAgreementUserAgent: merchantAgreementUserAgent
+      properties:
+        environment:
+          enum:
+            - sandbox
+            - production
+          type: string
+        submittedByType:
+          enum:
+            - merchant
+            - operator
+            - system
+          type: string
+        idempotencyKey:
+          type: string
+        merchantAgreementIpAddress:
+          description:
+            Captured from request headers when omitted — explicit supply
+            keeps hosted submits honest.
+          type: string
+        merchantAgreementUserAgent:
+          type: string
     MerchantOnboardingLinkRequest:
       additionalProperties: false
       example:
@@ -14052,6 +14631,10 @@ components:
     MerchantAccountStateResponse:
       $ref: "#/components/schemas/ApiWriteEnvelope"
     MerchantAccountCapabilitiesResponse:
+      $ref: "#/components/schemas/ApiWriteEnvelope"
+    MerchantAccountListResponse:
+      $ref: "#/components/schemas/ApiWriteEnvelope"
+    MerchantOnboardingResponse:
       $ref: "#/components/schemas/ApiWriteEnvelope"
     MerchantAccountResponse:
       $ref: "#/components/schemas/ApiWriteEnvelope"

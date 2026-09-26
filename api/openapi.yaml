@@ -2331,7 +2331,10 @@ paths:
           $ref: "#/components/responses/ApiError"
       security:
         - api-key: []
-      summary: Create a hosted checkout session
+      summary:
+        Create a hosted checkout session. checkoutUrl + token are bearer secrets
+        returned only on creation (hash-only at rest) — GET and idempotent replays
+        return them as null. Persist the create response or mint a fresh session.
       tags:
         - billing
         - checkout
@@ -2354,6 +2357,76 @@ paths:
               client: vortex,
               query: { environment: "sandbox", merchantAccountId: "..." },
               body: {"mode":"subscription","customerExternalId":"cus_123","subscriptionExternalId":"sub_123","collectionMode":"automatic","lineItems":[{"priceId":"price_core_monthly","quantity":1}],"createdByRef":"internal-integration"},
+            });
+  /v1/checkout/sessions/{checkoutSessionId}:
+    get:
+      operationId: getCheckoutSession
+      parameters:
+        - explode: false
+          in: path
+          name: checkoutSessionId
+          required: true
+          schema:
+            type: string
+          style: simple
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CheckoutSessionResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary:
+        Inspect a hosted checkout session. checkoutUrl and token are always
+        null — the redeemable hosted link exists only in the create response.
+      tags:
+        - billing
+        - checkout
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/checkout/sessions/{checkoutSessionId}?environment=sandbox&merchantAccountId=..." \
+              -X GET \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { getCheckoutSession, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await getCheckoutSession({
+              client: vortex,
+              path: { checkoutSessionId: "..." },
+              query: { environment: "sandbox", merchantAccountId: "..." },
             });
   /v1/coupons:
     get:
@@ -2880,6 +2953,81 @@ paths:
               query: { environment: "sandbox", merchantAccountId: "..." },
               body: {"email":"billing@example.com","name":"Acme Inc.","billingCurrency":"USD"},
             });
+  /v1/customers/{customerId}/access:
+    get:
+      operationId: checkCustomerAccess
+      parameters:
+        - explode: false
+          in: path
+          name: customerId
+          required: true
+          schema:
+            type: string
+          style: simple
+        - explode: true
+          in: query
+          name: key
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerAccessResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: Check product-facing customer access for one entitlement key
+      tags:
+        - billing
+        - entitlements
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/customers/{customerId}/access?key=...&environment=sandbox&merchantAccountId=..." \
+              -X GET \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { checkCustomerAccess, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await checkCustomerAccess({
+              client: vortex,
+              path: { customerId: "..." },
+              query: { key: "...", environment: "sandbox", merchantAccountId: "..." },
+            });
   /v1/customers/{customerId}/balance:
     get:
       operationId: getCustomerBalance
@@ -3012,6 +3160,74 @@ paths:
 
             const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
             const { data } = await getCustomerEntitlements({
+              client: vortex,
+              path: { customerId: "..." },
+              query: { environment: "sandbox", merchantAccountId: "..." },
+            });
+  /v1/customers/{customerId}/state:
+    get:
+      operationId: getCustomerState
+      parameters:
+        - explode: false
+          in: path
+          name: customerId
+          required: true
+          schema:
+            type: string
+          style: simple
+        - explode: true
+          in: query
+          name: environment
+          required: true
+          schema:
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: merchantAccountId
+          required: true
+          schema:
+            type: string
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerStateResponse"
+          description: Success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationFailure"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        default:
+          $ref: "#/components/responses/ApiError"
+      security:
+        - api-key: []
+      summary: Get product-facing customer billing and access state
+      tags:
+        - billing
+        - entitlements
+      x-codeSamples:
+        - lang: Shell
+          label: curl
+          source: |-
+            curl "https://api.vortex.nyc/v1/customers/{customerId}/state?environment=sandbox&merchantAccountId=..." \
+              -X GET \
+              -H "Authorization: Bearer $VORTEX_API_KEY" \
+        - lang: TypeScript
+          label: TypeScript
+          source: |-
+            import { getCustomerState, createVortex } from "@vortex-api/vortex/2026-08";
+
+            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
+            const { data } = await getCustomerState({
               client: vortex,
               path: { customerId: "..." },
               query: { environment: "sandbox", merchantAccountId: "..." },
@@ -9156,149 +9372,6 @@ paths:
               path: { customerId: "..." },
               query: { environment: "sandbox", merchantAccountId: "..." },
             });
-  /v1/customers/{customerId}/state:
-    get:
-      operationId: getCustomerState
-      parameters:
-        - explode: false
-          in: path
-          name: customerId
-          required: true
-          schema:
-            type: string
-          style: simple
-        - explode: true
-          in: query
-          name: environment
-          required: true
-          schema:
-            type: string
-          style: form
-        - explode: true
-          in: query
-          name: merchantAccountId
-          required: true
-          schema:
-            type: string
-          style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CustomerStateResponse"
-          description: Success
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/Conflict"
-        "422":
-          $ref: "#/components/responses/ValidationFailure"
-        "429":
-          $ref: "#/components/responses/RateLimited"
-        default:
-          $ref: "#/components/responses/ApiError"
-      security:
-        - api-key: []
-      summary: Get product-facing customer billing and access state
-      tags:
-        - billing
-        - entitlements
-      x-codeSamples:
-        - lang: Shell
-          label: curl
-          source: |-
-            curl "https://api.vortex.nyc/v1/customers/{customerId}/state?environment=sandbox&merchantAccountId=..." \
-              -X GET \
-              -H "Authorization: Bearer $VORTEX_API_KEY" \
-        - lang: TypeScript
-          label: TypeScript
-          source: |-
-            import { getCustomerState, createVortex } from "@vortex-api/vortex/2026-08";
-
-            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
-            const { data } = await getCustomerState({
-              client: vortex,
-              path: { customerId: "..." },
-              query: { environment: "sandbox", merchantAccountId: "..." },
-            });
-  /v1/customers/{customerId}/access:
-    get:
-      operationId: checkCustomerAccess
-      parameters:
-        - explode: false
-          in: path
-          name: customerId
-          required: true
-          schema:
-            type: string
-          style: simple
-        - explode: true
-          in: query
-          name: key
-          required: true
-          schema:
-            type: string
-          style: form
-        - explode: true
-          in: query
-          name: environment
-          required: true
-          schema:
-            type: string
-          style: form
-        - explode: true
-          in: query
-          name: merchantAccountId
-          required: true
-          schema:
-            type: string
-          style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CustomerAccessResponse"
-          description: Success
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/Conflict"
-        "422":
-          $ref: "#/components/responses/ValidationFailure"
-        "429":
-          $ref: "#/components/responses/RateLimited"
-        default:
-          $ref: "#/components/responses/ApiError"
-      security:
-        - api-key: []
-      summary: Check product-facing customer access for one entitlement key
-      tags:
-        - billing
-        - entitlements
-      x-codeSamples:
-        - lang: Shell
-          label: curl
-          source: |-
-            curl "https://api.vortex.nyc/v1/customers/{customerId}/access?key=...&environment=sandbox&merchantAccountId=..." \
-              -X GET \
-              -H "Authorization: Bearer $VORTEX_API_KEY" \
-        - lang: TypeScript
-          label: TypeScript
-          source: |-
-            import { checkCustomerAccess, createVortex } from "@vortex-api/vortex/2026-08";
-
-            const vortex = createVortex({ apiKey: process.env.VORTEX_API_KEY });
-            const { data } = await checkCustomerAccess({
-              client: vortex,
-              path: { customerId: "..." },
-              query: { key: "...", environment: "sandbox", merchantAccountId: "..." },
-            });
   /v1/merchant-accounts/{merchantAccountId}/settlements:
     get:
       operationId: getMerchantAccountSettlements
@@ -14722,6 +14795,8 @@ components:
     PaymentRequestLinkResponse:
       $ref: "#/components/schemas/ApiWriteEnvelope"
     CreateCheckoutSessionResponse:
+      $ref: "#/components/schemas/ApiWriteEnvelope"
+    CheckoutSessionResponse:
       $ref: "#/components/schemas/ApiWriteEnvelope"
     OpenApiCreateCheckoutSessionResponse:
       $ref: "#/components/schemas/ApiWriteEnvelope"
